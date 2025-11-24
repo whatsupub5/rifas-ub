@@ -40,37 +40,54 @@ function loadRifaDetail(rifaId) {
         `;
     }
     
+    // Cargar desde Firestore
+    loadRifaFromFirestore(rifaId);
+}
+
+// Cargar rifa desde Firestore
+async function loadRifaFromFirestore(rifaId) {
     try {
-        // Simulate loading delay (in production, this would be an API call)
-        setTimeout(() => {
-            try {
-                if (!window.getRifaById) {
-                    throw new Error('Función getRifaById no está disponible');
-                }
-                
-                const rifa = getRifaById(rifaId);
-                
-                if (!rifa) {
-                    showError(`Rifa con ID "${rifaId}" no encontrada. Puede que haya sido eliminada o el ID sea incorrecto.`);
-                    return;
-                }
-                
-                // Validate rifa has required fields
-                if (!rifa.title || !rifa.price || !rifa.totalNumbers) {
-                    showError('La rifa tiene información incompleta. Por favor contacta al soporte.', {
-                        message: 'Campos requeridos faltantes en la rifa'
-                    });
-                    return;
-                }
-                
-                currentRifa = rifa;
-                renderRifaDetail(rifa);
-            } catch (error) {
-                showError('Error al cargar los detalles de la rifa', error);
-            }
-        }, 300);
+        const rifaRef = doc(db, 'rifas', rifaId);
+        const rifaSnap = await getDoc(rifaRef);
+        
+        if (!rifaSnap.exists()) {
+            showError(`Rifa con ID "${rifaId}" no encontrada. Puede que haya sido eliminada o el ID sea incorrecto.`);
+            return;
+        }
+        
+        const rifaData = rifaSnap.data();
+        
+        // Convertir datos de Firestore a formato esperado
+        const rifa = {
+            id: rifaSnap.id,
+            title: rifaData.titulo || rifaData.title || 'Sin título',
+            description: rifaData.descripcion || rifaData.description || '',
+            image: rifaData.imagenUrl || rifaData.image || 'assets/logo-ub.png',
+            images: rifaData.imagenes || (rifaData.imagenUrl ? [rifaData.imagenUrl] : ['assets/logo-ub.png']),
+            price: rifaData.precio || rifaData.price || 0,
+            totalNumbers: rifaData.numerosTotales || rifaData.totalNumbers || 0,
+            organizerId: rifaData.organizadorId || rifaData.organizerId,
+            organizer: rifaData.organizador || rifaData.organizer || { name: 'Organizador', avatar: 'assets/logo-ub.png' },
+            endDate: rifaData.fechaFin || rifaData.endDate,
+            status: rifaData.estado || rifaData.status || 'active',
+            prize: rifaData.premio || rifaData.prize || rifaData.titulo || rifaData.title,
+            conditions: rifaData.condiciones || rifaData.conditions || [],
+            numerosVendidos: rifaData.numerosVendidos || []
+        };
+        
+        // Validate rifa has required fields
+        if (!rifa.title || !rifa.price || !rifa.totalNumbers) {
+            showError('La rifa tiene información incompleta. Por favor contacta al soporte.', {
+                message: 'Campos requeridos faltantes en la rifa'
+            });
+            return;
+        }
+        
+        currentRifa = rifa;
+        renderRifaDetail(rifa);
     } catch (error) {
-        showError('Error al iniciar la carga de la rifa', error);
+        console.error('Error loading rifa from Firestore:', error);
+        showError('Error al cargar los detalles de la rifa desde Firebase', error);
     }
 }
 
@@ -79,10 +96,10 @@ function renderRifaDetail(rifa) {
     const content = document.getElementById('rifaDetailContent');
     if (!content) return;
     
-    // Get real sold numbers from localStorage
-    const numbersState = JSON.parse(localStorage.getItem(`rifa_${rifa.id}_numbers`) || '{}');
-    const realSoldNumbers = Object.keys(numbersState).filter(num => numbersState[num].status === 'sold').length;
-    const actualSoldNumbers = realSoldNumbers > 0 ? realSoldNumbers : (rifa.soldNumbers || 0);
+    // Get real sold numbers from Firestore (ya cargados en loadRifaFromFirestore)
+    const numerosVendidos = rifa.numerosVendidos || [];
+    const realSoldNumbers = numerosVendidos.filter(n => n.estado === 'pagado' || n.status === 'sold').length;
+    const actualSoldNumbers = realSoldNumbers > 0 ? realSoldNumbers : 0;
     
     const progressPercentage = (actualSoldNumbers / rifa.totalNumbers) * 100;
     const remainingNumbers = rifa.totalNumbers - actualSoldNumbers;
@@ -117,7 +134,7 @@ function renderRifaDetail(rifa) {
                 <div class="image-gallery">
                     <div class="main-image-container">
                         <img id="mainImage" src="${images[0]}" alt="${rifa.title}" 
-                             onerror="this.src='https://via.placeholder.com/600x400?text=Sin+Imagen'"
+                             onerror="this.src='assets/logo-ub.png'"
                              onclick="${hasMultipleImages ? 'openImageLightbox(0)' : ''}">
                         ${hasMultipleImages ? `
                         <button class="image-nav-btn prev-btn" onclick="changeImage(-1)" title="Imagen anterior">
@@ -137,15 +154,15 @@ function renderRifaDetail(rifa) {
                             <img src="${img}" alt="${rifa.title} - Imagen ${index + 1}" 
                                  class="thumbnail ${index === 0 ? 'active' : ''}"
                                  onclick="selectThumbnail(${index})"
-                                 onerror="this.src='https://via.placeholder.com/100?text=Sin+Imagen'">
+                                 onerror="this.src='assets/logo-ub.png'">
                         `).join('')}
                     </div>
                     ` : ''}
                 </div>
                 ` : `
-                <img src="${images[0] || 'https://via.placeholder.com/600x400?text=Sin+Imagen'}" 
+                <img src="${images[0] || 'assets/logo-ub.png'}" 
                      alt="${rifa.title}" 
-                     onerror="this.src='https://via.placeholder.com/600x400?text=Sin+Imagen'"
+                     onerror="this.src='assets/logo-ub.png'"
                      onclick="${images.length > 0 ? 'openImageLightbox(0)' : ''}">
                 `}
                 ${statusInfo.badge}
@@ -416,12 +433,12 @@ function generateNumberGrid() {
     
     // Simulate loading delay
     setTimeout(() => {
-        grid.innerHTML = '';
+    grid.innerHTML = '';
         
         // Get real sold numbers from localStorage
         const numbersState = JSON.parse(localStorage.getItem(`rifa_${currentRifa.id}_numbers`) || '{}');
-        
-        for (let i = 1; i <= currentRifa.totalNumbers; i++) {
+    
+    for (let i = 1; i <= currentRifa.totalNumbers; i++) {
         const numberBtn = document.createElement('button');
         numberBtn.className = 'number-btn';
         numberBtn.textContent = String(i).padStart(3, '0');
@@ -436,8 +453,8 @@ function generateNumberGrid() {
             numberBtn.title = `Vendido${numberData.buyer ? ' a ' + numberData.buyer : ''}`;
         }
         
-            grid.appendChild(numberBtn);
-        }
+        grid.appendChild(numberBtn);
+    }
     }, 300);
 }
 
@@ -811,7 +828,7 @@ async function processRifaPayment() {
         alert('✅ Reserva Exitosa\n\nTu número ha sido reservado correctamente. El organizador validará tu pago y te contactará pronto.');
         
         // Cerrar modal
-        closeModal(document.getElementById('paymentModal'));
+                closeModal(document.getElementById('paymentModal'));
         
         // Recargar página para mostrar el número vendido
         setTimeout(() => {
@@ -2054,7 +2071,7 @@ function updateMainImage() {
     if (mainImage && currentImages[currentImageIndex]) {
         mainImage.src = currentImages[currentImageIndex];
         mainImage.onerror = function() {
-            this.src = 'https://via.placeholder.com/600x400?text=Sin+Imagen';
+            this.src = 'assets/logo-ub.png';
         };
     }
     
@@ -2100,14 +2117,14 @@ function openImageLightbox(index) {
             <img src="${currentImages[currentImageIndex]}" 
                  alt="Imagen ${currentImageIndex + 1}"
                  id="lightboxImage"
-                 onerror="this.src='https://via.placeholder.com/800x600?text=Sin+Imagen'">
+                 onerror="this.src='assets/logo-ub.png'">
             ${currentImages.length > 1 ? `
             <div class="lightbox-thumbnails">
                 ${currentImages.map((img, idx) => `
                     <img src="${img}" 
                          class="lightbox-thumb ${idx === currentImageIndex ? 'active' : ''}"
                          onclick="selectLightboxImage(${idx})"
-                         onerror="this.src='https://via.placeholder.com/80?text=Sin+Imagen'">
+                         onerror="this.src='assets/logo-ub.png'">
                 `).join('')}
             </div>
             ` : ''}
@@ -2152,7 +2169,7 @@ function navigateLightbox(direction) {
     if (lightboxImage) {
         lightboxImage.src = currentImages[currentImageIndex];
         lightboxImage.onerror = function() {
-            this.src = 'https://via.placeholder.com/800x600?text=Sin+Imagen';
+            this.src = 'assets/logo-ub.png';
         };
     }
     
