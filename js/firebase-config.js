@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDoc, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, doc, updateDoc, arrayUnion, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDzXrkKgGciuNzMizcfg9PVQ-yQh6ddOME",
@@ -12,9 +11,7 @@ const firebaseConfig = {
   measurementId: "G-QT7VNZ2MRY"
 };
 
-// Inicializar
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
 
-export { db, auth, collection, addDoc, getDoc, doc, updateDoc, arrayUnion };
+export { db, collection, getDocs, doc, updateDoc, arrayUnion, getDoc };

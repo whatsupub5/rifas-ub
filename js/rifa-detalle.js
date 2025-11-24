@@ -1,7 +1,7 @@
 // ========== RIFA DETALLE LOGIC ==========
 
 // Importar Firebase
-import { db, doc, updateDoc, arrayUnion } from './firebase-config.js';
+import { db, doc, updateDoc, arrayUnion, getDoc } from './firebase-config.js';
 
 let currentRifa = null;
 let selectedNumber = null;
