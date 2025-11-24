@@ -66,13 +66,13 @@ async function loadRifaFromFirestore(rifaId) {
             id: rifaSnap.id,
             title: titulo,
             description: rifaData.descripcion || rifaData.description || '',
-            image: rifaData.imagenUrl || rifaData.image || 'assets/logo-ub.png',
-            images: rifaData.imagenes || (rifaData.imagenUrl ? [rifaData.imagenUrl] : ['assets/logo-ub.png']),
+            image: rifaData.imagenUrl || rifaData.image || 'assets/logo-ub.svg',
+            images: rifaData.imagenes || (rifaData.imagenUrl ? [rifaData.imagenUrl] : ['assets/logo-ub.svg']),
             price: precio,
             moneda: moneda,
             totalNumbers: rifaData.numerosTotales || rifaData.totalNumbers || 0,
             organizerId: rifaData.organizadorId || rifaData.organizerId,
-            organizer: rifaData.organizador || rifaData.organizer || { name: 'Organizador', avatar: 'assets/logo-ub.png' },
+            organizer: rifaData.organizador || rifaData.organizer || { name: 'Organizador', avatar: 'assets/logo-ub.svg' },
             endDate: rifaData.fechaFin || rifaData.endDate,
             status: rifaData.estado || rifaData.status || 'active',
             prize: rifaData.premio || rifaData.prize || titulo,
@@ -157,7 +157,7 @@ function renderRifaDetail(rifa) {
                 <div class="image-gallery">
                     <div class="main-image-container">
                         <img id="mainImage" src="${images[0]}" alt="${rifa.title}" 
-                             onerror="this.src='assets/logo-ub.png'"
+                             onerror="this.src='assets/logo-ub.svg'"
                              onclick="${hasMultipleImages ? 'openImageLightbox(0)' : ''}">
                         ${hasMultipleImages ? `
                         <button class="image-nav-btn prev-btn" onclick="changeImage(-1)" title="Imagen anterior">
@@ -177,15 +177,15 @@ function renderRifaDetail(rifa) {
                             <img src="${img}" alt="${rifa.title} - Imagen ${index + 1}" 
                                  class="thumbnail ${index === 0 ? 'active' : ''}"
                                  onclick="selectThumbnail(${index})"
-                                 onerror="this.src='assets/logo-ub.png'">
+                                 onerror="this.src='assets/logo-ub.svg'">
                         `).join('')}
                     </div>
                     ` : ''}
                 </div>
                 ` : `
-                <img src="${images[0] || 'assets/logo-ub.png'}" 
+                <img src="${images[0] || 'assets/logo-ub.svg'}" 
                      alt="${rifa.title}" 
-                     onerror="this.src='assets/logo-ub.png'"
+                     onerror="this.src='assets/logo-ub.svg'"
                      onclick="${images.length > 0 ? 'openImageLightbox(0)' : ''}">
                 `}
                 ${statusInfo.badge}
@@ -2094,7 +2094,7 @@ function updateMainImage() {
     if (mainImage && currentImages[currentImageIndex]) {
         mainImage.src = currentImages[currentImageIndex];
         mainImage.onerror = function() {
-            this.src = 'assets/logo-ub.png';
+            this.src = 'assets/logo-ub.svg';
         };
     }
     
@@ -2140,14 +2140,14 @@ function openImageLightbox(index) {
             <img src="${currentImages[currentImageIndex]}" 
                  alt="Imagen ${currentImageIndex + 1}"
                  id="lightboxImage"
-                 onerror="this.src='assets/logo-ub.png'">
+                 onerror="this.src='assets/logo-ub.svg'">
             ${currentImages.length > 1 ? `
             <div class="lightbox-thumbnails">
                 ${currentImages.map((img, idx) => `
                     <img src="${img}" 
                          class="lightbox-thumb ${idx === currentImageIndex ? 'active' : ''}"
                          onclick="selectLightboxImage(${idx})"
-                         onerror="this.src='assets/logo-ub.png'">
+                         onerror="this.src='assets/logo-ub.svg'">
                 `).join('')}
             </div>
             ` : ''}
@@ -2192,7 +2192,7 @@ function navigateLightbox(direction) {
     if (lightboxImage) {
         lightboxImage.src = currentImages[currentImageIndex];
         lightboxImage.onerror = function() {
-            this.src = 'assets/logo-ub.png';
+            this.src = 'assets/logo-ub.svg';
         };
     }
     
