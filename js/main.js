@@ -1,5 +1,31 @@
 // ========== MAIN APPLICATION LOGIC ==========
 
+// Format Number Function (define globally first)
+window.formatNumber = function(number, currency = 'COP') {
+    if (typeof number !== 'number') {
+        number = parseFloat(number) || 0;
+    }
+    return number.toLocaleString('es-CO', {
+        style: 'currency',
+        currency: currency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).replace('COP', '').trim();
+};
+
+// También como función sin prefijo window para compatibilidad
+function formatNumber(number, currency = 'COP') {
+    if (typeof number !== 'number') {
+        number = parseFloat(number) || 0;
+    }
+    return number.toLocaleString('es-CO', {
+        style: 'currency',
+        currency: currency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).replace('COP', '').trim();
+}
+
 // Toast Notification Function (define globally first)
 window.showToast = function(message, type = 'info') {
     const toast = document.createElement('div');

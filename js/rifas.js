@@ -191,7 +191,12 @@ function createRifaCard(rifa) {
 }
 
 // Format number with thousands separator
+// Nota: formatNumber está definida globalmente en main.js
+// Esta función local se mantiene para compatibilidad, pero usa la global si está disponible
 function formatNumber(num) {
+    if (window.formatNumber) {
+        return window.formatNumber(num);
+    }
     return new Intl.NumberFormat('es-CO').format(num);
 }
 
