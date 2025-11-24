@@ -391,18 +391,41 @@ async function buyNumber(rifaId, number, paymentMethod) {
 // Cargar rifa destacada para hero card desde Firebase
 async function loadFeaturedRifaForHero() {
     try {
-        const rifasRef = collection(db, 'rifas');
-        const rifasSnap = await getDocs(rifasRef);
+        console.log('🔥 Iniciando conexión a Firebase...');
+        console.log('📊 Base de datos:', db);
         
-        if (rifasSnap.empty) {
-            console.log('No hay rifas en Firebase, usando datos estáticos');
+        if (!db) {
+            console.error('❌ Error: db no está definido. Firebase no se inicializó correctamente.');
             return;
         }
+        
+        console.log('📂 Accediendo a colección "rifas"...');
+        const rifasRef = collection(db, 'rifas');
+        console.log('📂 Referencia a colección creada:', rifasRef);
+        
+        console.log('⏳ Obteniendo documentos de Firestore...');
+        const rifasSnap = await getDocs(rifasRef);
+        console.log('✅ Documentos obtenidos. Total:', rifasSnap.size);
+        
+        if (rifasSnap.empty) {
+            console.warn('⚠️ No hay rifas en Firebase. Verifica:');
+            console.warn('   1. Que exista la colección "rifas" en Firestore');
+            console.warn('   2. Que las reglas de Firestore permitan lectura');
+            console.warn('   3. Que haya al menos un documento en la colección');
+            return;
+        }
+        
+        // Log de todos los documentos para debugging
+        console.log('📋 Documentos encontrados:');
+        rifasSnap.forEach((doc) => {
+            console.log(`   - ID: ${doc.id}`, doc.data());
+        });
         
         // Obtener la primera rifa activa
         let featuredRifa = null;
         rifasSnap.forEach((doc) => {
             const data = doc.data();
+            console.log(`🔍 Revisando rifa ${doc.id}:`, data);
             if (!featuredRifa && (data.estado === 'active' || data.status === 'active')) {
                 featuredRifa = {
                     id: doc.id,
@@ -413,14 +436,52 @@ async function loadFeaturedRifaForHero() {
                     numerosVendidos: data.numerosVendidos || [],
                     image: data.imagenUrl || data.image || 'assets/logo-ub.png'
                 };
+                console.log('✅ Rifa destacada seleccionada:', featuredRifa);
             }
         });
         
         if (featuredRifa) {
+            console.log('🎨 Actualizando hero card con:', featuredRifa);
             updateHeroCard(featuredRifa);
+        } else {
+            console.warn('⚠️ No se encontró ninguna rifa activa. Usando la primera disponible...');
+            // Si no hay activa, usar la primera
+            const firstDoc = rifasSnap.docs[0];
+            if (firstDoc) {
+                const data = firstDoc.data();
+                featuredRifa = {
+                    id: firstDoc.id,
+                    title: data.titulo || data.title || 'Sin título',
+                    price: data.precio || data.price || 0,
+                    moneda: data.moneda || data.currency || 'COP',
+                    totalNumbers: data.numerosTotales || data.totalNumbers || 0,
+                    numerosVendidos: data.numerosVendidos || [],
+                    image: data.imagenUrl || data.image || 'assets/logo-ub.png'
+                };
+                updateHeroCard(featuredRifa);
+            }
         }
     } catch (error) {
-        console.error('Error cargando rifa destacada:', error);
+        console.error('❌ ERROR al cargar rifa destacada desde Firebase:', error);
+        console.error('   Código de error:', error.code);
+        console.error('   Mensaje:', error.message);
+        
+        if (error.code === 'permission-denied') {
+            console.error('🚫 PERMISO DENEGADO: Las reglas de Firestore no permiten lectura.');
+            console.error('   Solución: Actualiza las reglas de Firestore para permitir lectura pública:');
+            console.error('   rules_version = "2";');
+            console.error('   service cloud.firestore {');
+            console.error('     match /databases/{database}/documents {');
+            console.error('       match /rifas/{document=**} {');
+            console.error('         allow read: if true;');
+            console.error('       }');
+            console.error('     }');
+            console.error('   }');
+        } else if (error.code === 'unavailable') {
+            console.error('🌐 SERVICIO NO DISPONIBLE: Firebase no está disponible en este momento.');
+        } else {
+            console.error('   Error completo:', error);
+        }
     }
 }
 
@@ -475,9 +536,12 @@ window.viewHeroRifa = function() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('📦 Inicializando módulo rifas.js...');
     initRifasGrid();
-    // Cargar rifa destacada para hero card
-    loadFeaturedRifaForHero();
+    // Cargar rifa destacada para hero card (con delay para asegurar que Firebase esté listo)
+    setTimeout(() => {
+        loadFeaturedRifaForHero();
+    }, 500);
 });
 
 // Export functions

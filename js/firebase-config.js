@@ -14,4 +14,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Verificar que Firebase se inicializó correctamente
+console.log('🔥 Firebase inicializado:', {
+    app: app ? '✅' : '❌',
+    db: db ? '✅' : '❌',
+    projectId: firebaseConfig.projectId
+});
+
 export { db, collection, getDocs, doc, updateDoc, arrayUnion, getDoc };
