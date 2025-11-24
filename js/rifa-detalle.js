@@ -1,5 +1,8 @@
 // ========== RIFA DETALLE LOGIC ==========
 
+// Importar Firebase
+import { db, doc, updateDoc, arrayUnion } from './firebase-config.js';
+
 let currentRifa = null;
 let selectedNumber = null;
 let currentImageIndex = 0;
@@ -700,11 +703,21 @@ function selectPaymentMethod(method, eventElement) {
     }
 }
 
-// Process payment (wrapper function that uses the main processPayment from payments.js)
+// Process payment con Firestore
 async function processRifaPayment() {
     const selectedMethod = document.querySelector('.payment-method.selected');
     if (!selectedMethod) {
         showToast('Por favor selecciona un método de pago', 'warning');
+        return;
+    }
+    
+    if (!selectedNumber) {
+        showToast('Por favor selecciona un número', 'warning');
+        return;
+    }
+    
+    if (!currentRifa || !currentRifa.id) {
+        showToast('Error: No se encontró la información de la rifa', 'error');
         return;
     }
     
@@ -713,10 +726,11 @@ async function processRifaPayment() {
     const isLoggedIn = user && user.id;
     
     // Validate guest information if not logged in
+    let guestName, guestEmail, guestPhone;
     if (!isLoggedIn) {
-        const guestName = document.getElementById('guestName')?.value?.trim();
-        const guestEmail = document.getElementById('guestEmail')?.value?.trim();
-        const guestPhone = document.getElementById('guestPhone')?.value?.trim();
+        guestName = document.getElementById('guestName')?.value?.trim();
+        guestEmail = document.getElementById('guestEmail')?.value?.trim();
+        guestPhone = document.getElementById('guestPhone')?.value?.trim();
         
         if (!guestName || guestName.length < 3) {
             showToast('Por favor ingresa tu nombre completo', 'warning');
@@ -724,7 +738,7 @@ async function processRifaPayment() {
             return;
         }
         
-        if (!guestEmail || !guestEmail.includes('@')) {
+        if (!guestEmail || !/\S+@\S+\.\S+/.test(guestEmail)) {
             showToast('Por favor ingresa un email válido', 'warning');
             document.getElementById('guestEmail')?.focus();
             return;
@@ -737,8 +751,8 @@ async function processRifaPayment() {
         }
     }
     
-    const phone = document.getElementById('paymentPhone')?.value || document.getElementById('guestPhone')?.value;
-    const email = document.getElementById('paymentEmail')?.value || document.getElementById('guestEmail')?.value || user?.email;
+    const phone = document.getElementById('paymentPhone')?.value || guestPhone;
+    const email = document.getElementById('paymentEmail')?.value || guestEmail || user?.email;
     
     // Validate based on method
     if ((method === 'nequi' || method === 'daviplata') && !phone) {
@@ -751,130 +765,85 @@ async function processRifaPayment() {
         return;
     }
     
-    showToast('Procesando pago...', 'info');
+    // Mostrar spinner de carga
+    const submitBtn = document.querySelector('#paymentForm button[onclick="processRifaPayment()"]');
+    const originalBtnText = submitBtn?.innerHTML;
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="loading"></span> Procesando...';
+    }
+    
+    showToast('Procesando compra...', 'info');
     
     try {
-        // Prepare guest or user data
-        const buyerData = isLoggedIn ? {
-            userId: user.id,
-            userName: user.firstName + ' ' + (user.lastName || ''),
-            userEmail: user.email
+        // Crear referencia a la rifa en Firestore
+        const rifaRef = doc(db, 'rifas', currentRifa.id);
+        
+        // Preparar datos del comprador
+        const compradorData = isLoggedIn ? {
+            nombre: user.firstName + ' ' + (user.lastName || ''),
+            telefono: phone,
+            email: user.email,
+            userId: user.id
         } : {
-            userId: null,
-            userName: document.getElementById('guestName')?.value?.trim(),
-            userEmail: document.getElementById('guestEmail')?.value?.trim(),
-            userPhone: document.getElementById('guestPhone')?.value?.trim(),
+            nombre: guestName,
+            telefono: guestPhone,
+            email: guestEmail,
             isGuest: true
         };
         
-        // Use structured payment system from payments.js
-        const paymentData = {
-            rifaId: currentRifa.id,
-            rifaTitle: currentRifa.title,
-            rifaImage: currentRifa.image,
-            number: selectedNumber,
-            amount: currentRifa.price,
-            method: method,
-            phone: phone,
-            email: email,
-            userId: buyerData.userId,
-            userName: buyerData.userName,
-            userEmail: buyerData.userEmail,
-            isGuest: buyerData.isGuest || false,
-            endDate: currentRifa.endDate
+        // Crear objeto del número vendido
+        const numeroVendido = {
+            numero: selectedNumber,
+            comprador: compradorData,
+            fecha: new Date().toISOString(),
+            estado: 'pendiente_validacion',
+            metodoPago: method,
+            precio: currentRifa.price
         };
         
-        // Use the main processPayment function from payments.js
-        if (!window.processPayment) {
-            throw new Error('Sistema de pagos no disponible');
-        }
+        // Actualizar Firestore: agregar número al array numerosVendidos
+        await updateDoc(rifaRef, {
+            numerosVendidos: arrayUnion(numeroVendido)
+        });
         
-        const result = await window.processPayment(paymentData);
+        // Éxito: mostrar alerta
+        alert('✅ Reserva Exitosa\n\nTu número ha sido reservado correctamente. El organizador validará tu pago y te contactará pronto.');
         
-        if (result.success) {
-            showToast('¡Compra realizada exitosamente!', 'success');
-            
-            // Save guest purchase if not logged in
-            if (!isLoggedIn) {
-                saveGuestPurchase(paymentData, buyerData);
-            }
-            
-            setTimeout(() => {
-                closeModal(document.getElementById('paymentModal'));
-                if (isLoggedIn) {
-                    window.location.href = 'dashboard-comprador.html';
-                } else {
-                    // Show success message and option to register
-                    if (confirm('¿Deseas crear una cuenta para ver tus compras y recibir notificaciones?')) {
-                        window.location.href = 'index.html#register';
-                    } else {
-                        window.location.href = 'index.html';
-                    }
-                }
-            }, 2000);
-        } else {
-            showToast(result.error || 'Error al procesar el pago', 'error');
-        }
+        // Cerrar modal
+        closeModal(document.getElementById('paymentModal'));
+        
+        // Recargar página para mostrar el número vendido
+        setTimeout(() => {
+            window.location.reload();
+        }, 1500);
+        
     } catch (error) {
-        console.error('Payment error in rifa-detalle.js:', error);
+        console.error('Error procesando compra en Firestore:', error);
         
-        // More specific error messages
-        let errorMessage = 'Error al procesar el pago';
-        
-        if (error.message) {
-            if (error.message.includes('network') || error.message.includes('fetch')) {
-                errorMessage = 'Error de conexión. Verifica tu internet e intenta nuevamente.';
-            } else if (error.message.includes('timeout')) {
-                errorMessage = 'La solicitud tardó demasiado. Por favor intenta nuevamente.';
-            } else {
-                errorMessage = error.message;
-            }
+        // Restaurar botón
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
         }
         
+        // Manejo de errores específicos
+        let errorMessage = 'Error al procesar la compra';
+        
+        if (error.code === 'permission-denied') {
+            errorMessage = 'No tienes permisos para realizar esta acción. Por favor contacta al soporte.';
+        } else if (error.code === 'unavailable') {
+            errorMessage = 'Servicio temporalmente no disponible. Por favor intenta más tarde.';
+        } else if (error.message) {
+            errorMessage = error.message;
+        }
+        
+        alert('❌ Error\n\n' + errorMessage);
         showToast(errorMessage, 'error');
-        
-        // Log error for debugging
-        if (window.console && console.error) {
-            console.error('Payment processing error:', {
-                error: error,
-                rifaId: currentRifa?.id,
-                number: selectedNumber,
-                method: method
-            });
-        }
     }
 }
 
-// Save guest purchase
-function saveGuestPurchase(paymentData, buyerData) {
-    try {
-        const guestPurchases = JSON.parse(localStorage.getItem('guestPurchases') || '[]');
-        
-        const purchase = {
-            id: 'GUEST-' + Date.now(),
-            rifaId: paymentData.rifaId,
-            rifaTitle: paymentData.rifaTitle,
-            rifaImage: paymentData.rifaImage,
-            number: paymentData.number,
-            price: paymentData.amount,
-            purchaseDate: new Date().toISOString().split('T')[0],
-            paymentStatus: 'confirmed',
-            rifaStatus: 'active',
-            endDate: paymentData.endDate,
-            paymentMethod: paymentData.method,
-            phone: paymentData.phone,
-            email: buyerData.userEmail,
-            buyerName: buyerData.userName,
-            buyerPhone: buyerData.userPhone,
-            isGuest: true
-        };
-        
-        guestPurchases.push(purchase);
-        localStorage.setItem('guestPurchases', JSON.stringify(guestPurchases));
-    } catch (error) {
-        console.error('Error saving guest purchase:', error);
-    }
-}
+// Función saveGuestPurchase removida - ahora se guarda directamente en Firestore
 
 // Save purchase to historial
 function savePurchaseToHistorial(rifa, number) {
