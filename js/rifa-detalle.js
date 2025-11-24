@@ -66,13 +66,13 @@ async function loadRifaFromFirestore(rifaId) {
             id: rifaSnap.id,
             title: titulo,
             description: rifaData.descripcion || rifaData.description || '',
-            image: rifaData.imagenUrl || rifaData.image || 'assets/logo-ub.svg',
-            images: rifaData.imagenes || (rifaData.imagenUrl ? [rifaData.imagenUrl] : ['assets/logo-ub.svg']),
+            image: rifaData.imagenUrl || rifaData.image || 'assets/logo-ub.png',
+            images: rifaData.imagenes || (rifaData.imagenUrl ? [rifaData.imagenUrl] : ['assets/logo-ub.png']),
             price: precio,
             moneda: moneda,
             totalNumbers: rifaData.numerosTotales || rifaData.totalNumbers || 0,
             organizerId: rifaData.organizadorId || rifaData.organizerId,
-            organizer: rifaData.organizador || rifaData.organizer || { name: 'Organizador', avatar: 'assets/logo-ub.svg' },
+            organizer: rifaData.organizador || rifaData.organizer || { name: 'Organizador', avatar: 'assets/logo-ub.png' },
             endDate: rifaData.fechaFin || rifaData.endDate,
             status: rifaData.estado || rifaData.status || 'active',
             prize: rifaData.premio || rifaData.prize || titulo,
@@ -97,11 +97,66 @@ async function loadRifaFromFirestore(rifaId) {
         }
         
         currentRifa = rifa;
+        
+        // Forzar reemplazo de elementos estáticos si existen
+        forceUpdateStaticElements(rifa);
+        
+        // Renderizar detalle completo
         renderRifaDetail(rifa);
+        
+        // Forzar actualización después del renderizado (con delay para asegurar que el DOM esté listo)
+        setTimeout(() => {
+            forceUpdateStaticElements(rifa);
+        }, 100);
     } catch (error) {
         console.error('Error loading rifa from Firestore:', error);
         showError('Error al cargar los detalles de la rifa desde Firebase', error);
     }
+}
+
+// Forzar actualización de elementos estáticos
+function forceUpdateStaticElements(rifa) {
+    if (!rifa) return;
+    
+    // Buscar y reemplazar título por clase o etiqueta
+    const titleElements = document.querySelectorAll('h1, .rifa-title, .rifa-detail-header h1, [class*="title"]');
+    titleElements.forEach(el => {
+        const text = el.textContent || el.innerText || '';
+        if (text.includes('iPhone') || text.includes('Pro Max') || text.includes('Ejemplo') || (text.trim() === '' && el.tagName === 'H1')) {
+            el.textContent = rifa.title;
+            console.log('✅ Título reemplazado:', rifa.title);
+        }
+    });
+    
+    // Buscar y reemplazar precio por clase o etiqueta
+    const priceElements = document.querySelectorAll('.stat-value, .rifa-price, .precio, [class*="price"], [class*="precio"]');
+    priceElements.forEach(el => {
+        const text = el.textContent || el.innerText || '';
+        if (text.includes('5.000') || text.includes('5000') || text.includes('por número') || text.includes('$5')) {
+            const precioFormateado = `$${formatNumber(rifa.price)} ${rifa.moneda || 'COP'}`;
+            el.textContent = precioFormateado;
+            console.log('✅ Precio reemplazado:', precioFormateado);
+        }
+    });
+    
+    // Buscar por texto específico y reemplazar en todos los elementos
+    const allElements = document.querySelectorAll('*');
+    allElements.forEach(el => {
+        if (el.children.length === 0 && el.textContent) {
+            const text = el.textContent;
+            // Reemplazar texto que contenga "iPhone 15 Pro Max"
+            if (text.includes('iPhone 15 Pro Max')) {
+                el.textContent = text.replace(/iPhone 15 Pro Max/g, rifa.title);
+                console.log('✅ Texto "iPhone 15 Pro Max" reemplazado por:', rifa.title);
+            }
+            // Reemplazar texto que contenga "5.000 por número" o "5000 por número"
+            if (text.includes('5.000 por número') || text.includes('5000 por número') || text.includes('$5.000')) {
+                const precioFormateado = `$${formatNumber(rifa.price)} ${rifa.moneda || 'COP'}`;
+                el.textContent = text.replace(/5\.?000 por número|5000 por número|\$5\.?000/g, precioFormateado);
+                console.log('✅ Precio estático reemplazado por:', precioFormateado);
+            }
+        }
+    });
 }
 
 // Render rifa detail
@@ -157,7 +212,7 @@ function renderRifaDetail(rifa) {
                 <div class="image-gallery">
                     <div class="main-image-container">
                         <img id="mainImage" src="${images[0]}" alt="${rifa.title}" 
-                             onerror="this.src='assets/logo-ub.svg'"
+                             onerror="this.src='assets/logo-ub.png'"
                              onclick="${hasMultipleImages ? 'openImageLightbox(0)' : ''}">
                         ${hasMultipleImages ? `
                         <button class="image-nav-btn prev-btn" onclick="changeImage(-1)" title="Imagen anterior">
@@ -177,15 +232,15 @@ function renderRifaDetail(rifa) {
                             <img src="${img}" alt="${rifa.title} - Imagen ${index + 1}" 
                                  class="thumbnail ${index === 0 ? 'active' : ''}"
                                  onclick="selectThumbnail(${index})"
-                                 onerror="this.src='assets/logo-ub.svg'">
+                                 onerror="this.src='assets/logo-ub.png'">
                         `).join('')}
                     </div>
                     ` : ''}
                 </div>
                 ` : `
-                <img src="${images[0] || 'assets/logo-ub.svg'}" 
+                <img src="${images[0] || 'assets/logo-ub.png'}" 
                      alt="${rifa.title}" 
-                     onerror="this.src='assets/logo-ub.svg'"
+                     onerror="this.src='assets/logo-ub.png'"
                      onclick="${images.length > 0 ? 'openImageLightbox(0)' : ''}">
                 `}
                 ${statusInfo.badge}
@@ -2094,7 +2149,7 @@ function updateMainImage() {
     if (mainImage && currentImages[currentImageIndex]) {
         mainImage.src = currentImages[currentImageIndex];
         mainImage.onerror = function() {
-            this.src = 'assets/logo-ub.svg';
+            this.src = 'assets/logo-ub.png';
         };
     }
     
@@ -2140,14 +2195,14 @@ function openImageLightbox(index) {
             <img src="${currentImages[currentImageIndex]}" 
                  alt="Imagen ${currentImageIndex + 1}"
                  id="lightboxImage"
-                 onerror="this.src='assets/logo-ub.svg'">
+                 onerror="this.src='assets/logo-ub.png'">
             ${currentImages.length > 1 ? `
             <div class="lightbox-thumbnails">
                 ${currentImages.map((img, idx) => `
                     <img src="${img}" 
                          class="lightbox-thumb ${idx === currentImageIndex ? 'active' : ''}"
                          onclick="selectLightboxImage(${idx})"
-                         onerror="this.src='assets/logo-ub.svg'">
+                         onerror="this.src='assets/logo-ub.png'">
                 `).join('')}
             </div>
             ` : ''}
@@ -2192,7 +2247,7 @@ function navigateLightbox(direction) {
     if (lightboxImage) {
         lightboxImage.src = currentImages[currentImageIndex];
         lightboxImage.onerror = function() {
-            this.src = 'assets/logo-ub.svg';
+            this.src = 'assets/logo-ub.png';
         };
     }
     
