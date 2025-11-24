@@ -11,6 +11,7 @@ Plataforma web completa para la gestión y participación en rifas digitales. RI
 - ✅ Dashboard personal con historial
 - ✅ Descarga de comprobantes
 - ✅ Sistema de favoritos
+- ✅ **Compra sin necesidad de registrarse**
 
 ### 👤 Para Organizadores
 - ✅ Creación y gestión de rifas
@@ -191,4 +192,3 @@ Este proyecto es propiedad de RIFAS UBIA.
 ---
 
 **Desarrollado con ❤️ para RIFAS UBIA**
-
