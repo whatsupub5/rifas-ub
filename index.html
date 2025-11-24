@@ -1004,69 +1004,13 @@
     </div>
 
     <!-- Scripts -->
-    <!-- Chatbot Widget -->
-    <div class="chatbot-widget" id="chatbotWidget">
-        <div class="chatbot-button" id="chatbotButton" onclick="toggleChatbot()">
-            <i class="fas fa-comments"></i>
-            <span class="chatbot-badge">1</span>
-        </div>
-        
-        <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header">
-                <div class="chatbot-header-info">
-                    <div class="chatbot-avatar">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div>
-                        <h3>Asistente IA</h3>
-                        <p class="chatbot-status">
-                            <i class="fas fa-circle"></i>
-                            En línea 24/7
-                        </p>
-                    </div>
-                </div>
-                <button class="chatbot-close" onclick="toggleChatbot()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="chatbot-messages" id="chatbotMessages">
-                <div class="chatbot-message ai-message">
-                    <div class="message-avatar">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="message-content">
-                        <p>¡Hola! 👋 Soy tu asistente de IA de RIFAS UBIA. ¿En qué puedo ayudarte hoy?</p>
-                        <small>Puedo ayudarte con información sobre rifas, compras, pagos y más.</small>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chatbot-suggestions" id="chatbotSuggestions">
-                <button class="suggestion-btn" onclick="sendSuggestion('¿Cómo funciona RIFAS UBIA?')">
-                    ¿Cómo funciona?
-                </button>
-                <button class="suggestion-btn" onclick="sendSuggestion('¿Cómo compro un número?')">
-                    ¿Cómo compro?
-                </button>
-                <button class="suggestion-btn" onclick="sendSuggestion('¿Qué métodos de pago aceptan?')">
-                    Métodos de pago
-                </button>
-            </div>
-            
-            <div class="chatbot-input-container">
-                <input type="text" id="chatbotInput" placeholder="Escribe tu mensaje..." onkeypress="handleChatbotKeyPress(event)">
-                <button class="chatbot-send" onclick="sendChatbotMessage()">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
+    <!-- Firebase Configuration (debe cargarse primero) -->
+    <script type="module" src="js/firebase-config.js"></script>
+    
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/reviews.js"></script>
     <script src="js/rifas.js"></script>
-    <script src="js/chatbot.js"></script>
+    <!-- Chatbot removido para Fase 1 - MVP -->
 </body>
 </html>

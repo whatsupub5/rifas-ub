@@ -1,0 +1,22 @@
+# ============================================
+# COMANDOS PARA SUBIR A GITHUB
+# ============================================
+
+# 1. PRIMERO: Crea el repositorio en GitHub
+#    Ve a: https://github.com/new
+#    Nombre: rifas-ubia
+#    NO marques "Initialize with README"
+
+# 2. LUEGO ejecuta estos comandos (reemplaza TU_USUARIO):
+
+git remote add origin https://github.com/TU_USUARIO/rifas-ubia.git
+git branch -M main
+git push -u origin main
+
+# ============================================
+# O usa el script automático:
+# ============================================
+
+./subir-github.sh
+
+# ============================================
