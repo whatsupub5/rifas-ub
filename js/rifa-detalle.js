@@ -498,6 +498,11 @@ function openNumberSelector() {
         selector.style.display = 'block';
         selector.scrollIntoView({ behavior: 'smooth' });
         generateNumberGrid();
+        
+        // Forzar actualización final después de que todo esté renderizado
+        setTimeout(() => {
+            forceUpdateStaticElements(rifa);
+        }, 300);
     }
 }
 

@@ -1,5 +1,8 @@
 // ========== RIFAS MANAGEMENT ==========
 
+// Importar Firebase
+import { db, collection, getDocs } from './firebase-config.js';
+
 // Sample rifas data (esto se reemplazará con datos de la API)
 const sampleRifas = [
     {
@@ -385,9 +388,101 @@ async function buyNumber(rifaId, number, paymentMethod) {
     });
 }
 
+// Cargar rifa destacada para hero card desde Firebase
+async function loadFeaturedRifaForHero() {
+    try {
+        const rifasRef = collection(db, 'rifas');
+        const rifasSnap = await getDocs(rifasRef);
+        
+        if (rifasSnap.empty) {
+            console.log('No hay rifas en Firebase, usando datos estáticos');
+            return;
+        }
+        
+        // Obtener la primera rifa activa
+        let featuredRifa = null;
+        rifasSnap.forEach((doc) => {
+            const data = doc.data();
+            if (!featuredRifa && (data.estado === 'active' || data.status === 'active')) {
+                featuredRifa = {
+                    id: doc.id,
+                    title: data.titulo || data.title || 'Sin título',
+                    price: data.precio || data.price || 0,
+                    moneda: data.moneda || data.currency || 'COP',
+                    totalNumbers: data.numerosTotales || data.totalNumbers || 0,
+                    numerosVendidos: data.numerosVendidos || [],
+                    image: data.imagenUrl || data.image || 'assets/logo-ub.png'
+                };
+            }
+        });
+        
+        if (featuredRifa) {
+            updateHeroCard(featuredRifa);
+        }
+    } catch (error) {
+        console.error('Error cargando rifa destacada:', error);
+    }
+}
+
+// Actualizar hero card con datos de Firebase
+function updateHeroCard(rifa) {
+    const titleEl = document.getElementById('heroRifaTitle');
+    const priceEl = document.getElementById('heroRifaPrice');
+    const numbersEl = document.getElementById('heroRifaNumbers');
+    const buttonEl = document.getElementById('heroRifaButton');
+    const imageEl = document.querySelector('.prize-image');
+    
+    if (titleEl) {
+        titleEl.textContent = rifa.title;
+    }
+    
+    if (priceEl) {
+        priceEl.textContent = `$${formatNumber(rifa.price)} ${rifa.moneda || 'COP'} por número`;
+    }
+    
+    if (numbersEl) {
+        const numerosVendidos = rifa.numerosVendidos || [];
+        const soldCount = numerosVendidos.filter(n => n.estado === 'pagado' || n.estado === 'pendiente_validacion').length;
+        const available = rifa.totalNumbers - soldCount;
+        numbersEl.textContent = `Números disponibles: ${available}/${rifa.totalNumbers}`;
+    }
+    
+    if (buttonEl) {
+        buttonEl.style.display = 'block';
+        buttonEl.onclick = () => {
+            window.location.href = `rifa-detalle.html?id=${rifa.id}`;
+        };
+    }
+    
+    if (imageEl && rifa.image) {
+        imageEl.src = rifa.image;
+    }
+    
+    console.log('✅ Hero card actualizado con datos de Firebase:', rifa);
+}
+
+// Función para formatear números
+function formatNumber(num) {
+    return new Intl.NumberFormat('es-CO').format(num);
+}
+
+// Función para ver rifa desde hero card
+window.viewHeroRifa = function() {
+    const titleEl = document.getElementById('heroRifaTitle');
+    if (titleEl && titleEl.textContent !== 'Cargando...') {
+        // El botón ya tiene el onclick configurado en updateHeroCard
+        const buttonEl = document.getElementById('heroRifaButton');
+        if (buttonEl && buttonEl.onclick) {
+            buttonEl.onclick();
+        }
+    }
+};
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     initRifasGrid();
+    // Cargar rifa destacada para hero card
+    loadFeaturedRifaForHero();
 });
 
 // Export functions

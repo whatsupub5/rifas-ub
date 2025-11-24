@@ -15,7 +15,7 @@
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img src="assets/logo-ub.svg" alt="RIFAS UB" class="logo" onerror="this.style.display='none'">
+                    <img src="assets/logo-ub.png" alt="RIFAS UB" class="logo" onerror="this.style.display='none'">
                     <span class="logo-text">RIFAS UB</span>
                 </div>
                 
@@ -94,12 +94,12 @@
             <div class="hero-image">
                 <div class="hero-card">
                     <div class="rifa-preview">
-                        <img src="assets/prize-example.jpg" alt="Premio de Ejemplo" class="prize-image" onerror="this.src='assets/logo-ub.svg'">
-                        <div class="rifa-info">
-                            <h3>iPhone 15 Pro Max</h3>
-                            <p class="rifa-price">$5.000 por número</p>
-                            <p class="rifa-numbers">Números disponibles: 247/500</p>
-                            <button class="btn btn-primary btn-small">Comprar Número</button>
+                        <img src="assets/logo-ub.png" alt="Premio de Ejemplo" class="prize-image" onerror="this.src='assets/logo-ub.png'">
+                        <div class="rifa-info" id="heroRifaInfo">
+                            <h3 id="heroRifaTitle">Cargando...</h3>
+                            <p class="rifa-price" id="heroRifaPrice">Cargando...</p>
+                            <p class="rifa-numbers" id="heroRifaNumbers">Cargando...</p>
+                            <button class="btn btn-primary btn-small" id="heroRifaButton" onclick="viewHeroRifa()" style="display: none;">Comprar Número</button>
                         </div>
                     </div>
                 </div>
@@ -695,7 +695,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="assets/logo-ub.svg" alt="RIFAS UB" class="logo" onerror="this.style.display='none'">
+                        <img src="assets/logo-ub.png" alt="RIFAS UB" class="logo" onerror="this.style.display='none'">
                         <span class="logo-text">RIFAS UBIA</span>
                     </div>
                     <p class="footer-description">
