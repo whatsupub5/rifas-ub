@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Ayuda - RIFAS UBIA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/legal-pages.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="index.html">
+                        <img src="assets/logo-ub.png" alt="RIFAS UBIA" class="logo" onerror="this.style.display='none'">
+                        <span class="logo-text">RIFAS UBIA</span>
+                    </a>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#rifas" class="nav-link">Rifas Activas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#sobre-nosotros" class="nav-link">Sobre Nosotros</a>
+                    </li>
+                </ul>
+                
+                <div class="nav-auth">
+                    <button class="btn btn-outline" onclick="window.location.href='index.html'">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Help Center Section -->
+    <section class="help-center-section" style="margin-top: 80px; padding: 3rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">Centro de Ayuda</h1>
+                <p class="section-subtitle">Encuentra respuestas rápidas a tus preguntas más comunes</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="help-search">
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="helpSearch" placeholder="Buscar en el centro de ayuda...">
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="help-categories">
+                <div class="category-card" onclick="showCategory('comprar')">
+                    <div class="category-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Comprar Números</h3>
+                    <p>Guías sobre cómo comprar y participar en rifas</p>
+                </div>
+                
+                <div class="category-card" onclick="showCategory('organizar')">
+                    <div class="category-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3>Organizar Rifas</h3>
+                    <p>Información para organizadores de rifas</p>
+                </div>
+                
+                <div class="category-card" onclick="showCategory('pagos')">
+                    <div class="category-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Pagos y Facturación</h3>
+                    <p>Todo sobre métodos de pago y comprobantes</p>
+                </div>
+                
+                <div class="category-card" onclick="showCategory('cuenta')">
+                    <div class="category-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Mi Cuenta</h3>
+                    <p>Gestión de perfil y configuración</p>
+                </div>
+                
+                <div class="category-card" onclick="showCategory('sorteos')">
+                    <div class="category-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Sorteos y Ganadores</h3>
+                    <p>Información sobre sorteos y resultados</p>
+                </div>
+                
+                <div class="category-card" onclick="showCategory('tecnico')">
+                    <div class="category-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Soporte Técnico</h3>
+                    <p>Soluciones a problemas técnicos</p>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h2 class="faq-title">Preguntas Frecuentes</h2>
+                
+                <div class="faq-list" id="faqList">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Contact Support -->
+            <div class="contact-support">
+                <div class="support-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>¿No encuentras lo que buscas?</h3>
+                    <p>Nuestro equipo de soporte está listo para ayudarte</p>
+                    <div class="support-buttons">
+                        <a href="index.html#contacto" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i> Contactar Soporte
+                        </a>
+                        <button class="btn btn-outline" onclick="window.location.href='index.html'">
+                            <i class="fas fa-comments"></i> Chat en Vivo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/centro-ayuda.js"></script>
+</body>
+</html>

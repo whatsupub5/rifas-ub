@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIFAS UBIA - Plataforma de Rifas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="assets/logo-ub.png" alt="RIFAS UB" class="logo" onerror="this.style.display='none'">
+                    <span class="logo-text">RIFAS UB</span>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link active">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#rifas" class="nav-link">Rifas Activas</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#pagos" class="nav-link dropdown-toggle" onclick="toggleDropdown(event, 'pagosDropdown')">
+                            Pagos <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" id="pagosDropdown">
+                            <li><a href="#metodos-pago" class="dropdown-item" onclick="scrollToSection('metodos-pago'); return false;">Métodos de Pago</a></li>
+                            <li><a href="fondo-comun.html" class="dropdown-item">Fondo Común</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#sobre-nosotros" class="nav-link dropdown-toggle" onclick="toggleDropdown(event, 'sobreDropdown')">
+                            Sobre Nosotros <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" id="sobreDropdown">
+                            <li><a href="#sobre-nosotros" class="dropdown-item" onclick="scrollToSection('sobre-nosotros'); return false;">Sobre Nosotros</a></li>
+                            <li><a href="#como-funciona" class="dropdown-item" onclick="scrollToSection('como-funciona'); return false;">¿Cómo Funciona?</a></li>
+                            <li><a href="terminos-condiciones.html" class="dropdown-item">Términos y Condiciones</a></li>
+                            <li><a href="politica-privacidad.html" class="dropdown-item">Política de Privacidad</a></li>
+                            <li><a href="preguntas-frecuentes.html" class="dropdown-item">Preguntas Frecuentes</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contacto" class="nav-link">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#seguridad" class="nav-link">Seguridad</a>
+                    </li>
+                </ul>
+                
+                <div class="nav-auth">
+                    <button class="btn btn-outline" id="loginBtn">Iniciar Sesión</button>
+                    <button class="btn btn-primary" id="registerBtn">Registrarse</button>
+                </div>
+                
+                <div class="nav-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    ¡Participa en las mejores <span class="highlight">rifas</span> de UBIA!
+                </h1>
+                <p class="hero-description">
+                    Gana increíbles premios mientras apoyas a la comunidad. 
+                    Rifas 100% seguras y transparentes.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" id="exploreRifas">
+                        <i class="fas fa-ticket-alt"></i>
+                        Explorar Rifas
+                    </button>
+                    <button class="btn btn-outline btn-large" id="createRifa">
+                        <i class="fas fa-plus"></i>
+                        Crear Rifa
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-card">
+                    <div class="rifa-preview">
+                        <img src="assets/prize-example.jpg" alt="Premio de Ejemplo" class="prize-image" onerror="this.src='https://via.placeholder.com/400x200?text=Premio+Ejemplo'">
+                        <div class="rifa-info">
+                            <h3>iPhone 15 Pro Max</h3>
+                            <p class="rifa-price">$5.000 por número</p>
+                            <p class="rifa-numbers">Números disponibles: 247/500</p>
+                            <button class="btn btn-primary btn-small">Comprar Número</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1,247</div>
+                    <div class="stat-label">Rifas Completadas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$2.5M</div>
+                    <div class="stat-label">En Premios Entregados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15,000+</div>
+                    <div class="stat-label">Participantes Activos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfacción</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Active Raffles Section -->
+    <section id="rifas" class="rifas-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Rifas Activas</h2>
+                <p class="section-subtitle">Descubre las rifas disponibles y participa por increíbles premios</p>
+            </div>
+            
+            <div class="rifas-grid" id="rifasGrid">
+                <!-- Las rifas se cargarán dinámicamente aquí -->
+            </div>
+            
+            <div class="load-more">
+                <button class="btn btn-outline" id="loadMoreRifas">
+                    <i class="fas fa-plus"></i>
+                    Cargar Más Rifas
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section (Collapsible) -->
+    <section id="como-funciona" class="how-it-works collapsible-section">
+        <div class="container">
+            <div class="collapsible-header-wrapper">
+                <button class="collapsible-header-btn" onclick="toggleCollapsible(event)">
+                    <div class="collapsible-header-content">
+                        <div class="collapsible-header-text">
+                            <h2 class="section-title">¿Cómo Funciona?</h2>
+                            <p class="section-subtitle">Participar en nuestras rifas es muy fácil</p>
+                        </div>
+                        <i class="fas fa-chevron-down collapsible-header-icon"></i>
+                    </div>
+                </button>
+            </div>
+            <div class="collapsible-content-wrapper">
+                <div class="collapsible-content" style="display: none;">
+                    <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="step-title">1. Explora Rifas</h3>
+                    <p class="step-description">Navega por las rifas activas y encuentra la que más te guste</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3 class="step-title">2. Elige tu Número</h3>
+                    <p class="step-description">Selecciona el número de la suerte que quieras comprar</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="step-title">3. Paga Seguro</h3>
+                    <p class="step-description">Realiza el pago de forma segura con Nequi, Daviplata o PayPal</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="step-title">4. ¡Gana!</h3>
+                    <p class="step-description">Participa en el sorteo y ¡podrías ser el ganador!</p>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section (Collapsible) -->
+    <section id="sobre-nosotros" class="about-section collapsible-section">
+        <div class="container">
+            <div class="collapsible-header-wrapper">
+                <button class="collapsible-header-btn" onclick="toggleCollapsible(event)">
+                    <div class="collapsible-header-content">
+                        <div class="collapsible-header-text">
+                            <h2 class="section-title">Sobre RIFAS UBIA</h2>
+                            <p class="section-subtitle">Conoce nuestra plataforma, valores y compromiso con la transparencia</p>
+                        </div>
+                        <i class="fas fa-chevron-down collapsible-header-icon"></i>
+                    </div>
+                </button>
+            </div>
+            <div class="collapsible-content-wrapper">
+                <div class="collapsible-content" style="display: none;">
+
+            <!-- Historia -->
+            <div class="about-content">
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="about-title">Nuestra Historia</h3>
+                    <p class="about-text">
+                        RIFAS UBIA es una plataforma innovadora de rifas digitales, comprometida con la transparencia, 
+                        seguridad y confiabilidad. Nacimos con el propósito de revolucionar la forma en que se organizan 
+                        y participan en rifas, ofreciendo un sistema 100% digital, seguro y verificable. Nuestra misión 
+                        es conectar organizadores y participantes en un entorno confiable y transparente.
+                    </p>
+                </div>
+
+                <!-- Misión -->
+                <div class="about-card">
+                    <div class="about-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="about-title">Misión</h3>
+                    <p class="about-text">
+                        RIFAS UBIA tiene como misión proporcionar una plataforma digital segura, transparente y confiable 
+                        para la organización y participación en rifas, facilitando el proceso tanto para organizadores como 
+                        para participantes. Nos comprometemos a ofrecer un servicio de excelencia que garantice sorteos 
+                        justos, pagos seguros y una experiencia excepcional para todos nuestros usuarios.
+                    </p>
+                </div>
+
+                <!-- Visión -->
+                <div class="about-card">
+                    <div class="about-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="about-title">Visión</h3>
+                    <p class="about-text">
+                        Para el año 2030, RIFAS UBIA será reconocida como la plataforma líder en organización de rifas digitales 
+                        en la región, caracterizada por la innovación tecnológica, la transparencia total en los procesos, 
+                        la seguridad en las transacciones y el compromiso con la satisfacción del usuario. Seremos el referente 
+                        en confiabilidad y excelencia en el sector de rifas digitales.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Valores -->
+            <div class="values-section">
+                <h3 class="values-title">Nuestros Valores</h3>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Excelencia</h4>
+                        <p>Comprometidos con la calidad en cada proceso, desde la organización hasta la entrega de premios.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4>Integridad</h4>
+                        <p>Actuamos con honestidad, transparencia y responsabilidad en todas nuestras acciones.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Responsabilidad</h4>
+                        <p>Comprometidos con el bienestar de nuestros usuarios y la transparencia en todas nuestras operaciones.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4>Innovación</h4>
+                        <p>Fomentamos la creatividad, el emprendimiento y la adaptación al cambio.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Respeto</h4>
+                        <p>Valoramos la diversidad, la inclusión y el diálogo constructivo.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h4>Equidad</h4>
+                        <p>Garantizamos igualdad de oportunidades para todos los participantes en nuestros sorteos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información Institucional Compacta -->
+            <div class="institutional-info-compact" style="margin-top: 2rem; padding: 2rem; background: var(--bg-secondary); border-radius: var(--radius-lg);">
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; color: var(--text-primary);">
+                    <i class="fas fa-chart-line"></i> Nuestros Números
+                </h3>
+                <div class="info-grid-compact" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;">
+                    <div class="info-item-compact" style="text-align: center; padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md);">
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">2024</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);"><i class="fas fa-calendar-alt"></i> Fundación</div>
+                    </div>
+                    <div class="info-item-compact" style="text-align: center; padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md);">
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">15,000+</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);"><i class="fas fa-users"></i> Usuarios</div>
+                    </div>
+                    <div class="info-item-compact" style="text-align: center; padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md);">
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">1,247+</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);"><i class="fas fa-ticket-alt"></i> Rifas</div>
+                    </div>
+                    <div class="info-item-compact" style="text-align: center; padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md);">
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">$2.5M+</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);"><i class="fas fa-dollar-sign"></i> Transacciones</div>
+                    </div>
+                    <div class="info-item-compact" style="text-align: center; padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md);">
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">98%</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);"><i class="fas fa-award"></i> Satisfacción</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Objetivos Estratégicos (Collapsible) -->
+            <div class="collapsible-section" style="margin-top: 2rem;">
+                <button class="collapsible-btn" onclick="toggleCollapsible(event)">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0; color: var(--text-primary);">
+                        <i class="fas fa-bullseye"></i> Objetivos Estratégicos
+                    </h3>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="objectives-section" style="margin-top: 1rem; padding: 1.5rem; background: var(--bg-secondary); border-radius: var(--radius-lg);">
+                        <div class="objectives-grid">
+                            <div class="objective-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Mejorar continuamente la experiencia del usuario en la plataforma</p>
+                            </div>
+                            <div class="objective-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Implementar tecnologías de vanguardia para sorteos seguros y transparentes</p>
+                            </div>
+                            <div class="objective-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Ampliar la cobertura y llegar a más organizadores y participantes</p>
+                            </div>
+                            <div class="objective-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Fortalecer las alianzas con pasarelas de pago y servicios de verificación</p>
+                            </div>
+                            <div class="objective-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Modernizar la infraestructura tecnológica y mejorar la seguridad</p>
+                            </div>
+                            <div class="objective-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Expandir nuestros servicios a nivel nacional e internacional</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compromiso con la Comunidad -->
+            <div class="commitment-section">
+                <div class="commitment-content">
+                    <div class="commitment-text">
+                        <h3>Nuestro Compromiso</h3>
+                        <p>
+                            RIFAS UBIA es una plataforma innovadora que conecta organizadores y participantes en un entorno 
+                            completamente seguro y transparente. Nuestro objetivo es facilitar la organización de rifas 
+                            mientras garantizamos la máxima confiabilidad y seguridad en cada transacción.
+                        </p>
+                        <p>
+                            Cada rifa en nuestra plataforma está respaldada por sistemas de verificación avanzados, garantizando 
+                            sorteos justos, premios reales y transacciones seguras. Nos comprometemos a ofrecer la mejor 
+                            experiencia tanto para organizadores como para participantes, con tecnología de punta y atención 
+                            al cliente excepcional.
+                        </p>
+                    </div>
+                    <div class="commitment-image">
+                        <div class="commitment-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>100% Transparente</h4>
+                            <p>Sorteos verificables y auditables</p>
+                        </div>
+                        <div class="commitment-card">
+                            <i class="fas fa-lock"></i>
+                            <h4>100% Seguro</h4>
+                            <p>Pagos protegidos y datos seguros</p>
+                        </div>
+                        <div class="commitment-card">
+                            <i class="fas fa-heart"></i>
+                            <h4>100% Confiable</h4>
+                            <p>Respaldo institucional garantizado</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security & Privacy Section -->
+    <section id="seguridad" class="security-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Tu Seguridad es Nuestra Prioridad</h2>
+                <p class="section-subtitle">Garantizamos la protección total de tus datos personales con encriptación de nivel bancario</p>
+            </div>
+            
+            <div class="security-grid">
+                <div class="security-card">
+                    <div class="security-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Encriptación Total</h3>
+                    <p>Todos tus datos están protegidos con encriptación <strong>AES-256</strong> (nivel bancario) y transmisiones seguras <strong>SSL/TLS 1.3</strong>. Tus datos personales están completamente encriptados y solo tú puedes acceder a ellos.</p>
+                </div>
+                
+                <div class="security-card">
+                    <div class="security-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Control Total de tus Datos</h3>
+                    <p><strong>Nadie puede acceder a tus datos personales sin tu autorización explícita.</strong> Ni nuestros empleados, ni organizadores, ni terceros tienen acceso a tu información completa. Solo tú controlas quién ve tus datos.</p>
+                </div>
+                
+                <div class="security-card">
+                    <div class="security-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Privacidad Garantizada</h3>
+                    <p>Tus datos están protegidos conforme al <strong>RGPD/GDPR</strong> europeo. Tienes derecho a acceder, modificar, exportar o eliminar tus datos en cualquier momento desde tu panel de usuario.</p>
+                </div>
+                
+                <div class="security-card">
+                    <div class="security-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>Excepciones Legales</h3>
+                    <p>Únicamente proporcionaremos acceso a tus datos cuando sea requerido por <strong>orden judicial</strong> o autoridad competente española/europea legalmente autorizada. En estos casos, solo se compartirán los datos específicamente solicitados y te notificaremos (cuando la ley lo permita).</p>
+                </div>
+                
+                <div class="security-card">
+                    <div class="security-icon">
+                        <i class="fas fa-eye-slash"></i>
+                    </div>
+                    <h3>Sin Acceso No Autorizado</h3>
+                    <p>Los organizadores de rifas solo reciben información mínima (nombre de usuario y número comprado). <strong>No tienen acceso</strong> a tu email, teléfono, dirección completa, datos bancarios o documentos de identidad.</p>
+                </div>
+                
+                <div class="security-card">
+                    <div class="security-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Cumplimiento RGPD</h3>
+                    <p>Estamos totalmente conforme con el <strong>Reglamento General de Protección de Datos (RGPD)</strong> de la UE. Puedes ejercer tus derechos (acceso, rectificación, supresión, portabilidad) en cualquier momento. <a href="politica-privacidad.html" style="color: var(--primary-color); text-decoration: underline;">Ver Política de Privacidad completa</a></p>
+                </div>
+            </div>
+            
+            <div class="security-badges">
+                <div class="security-badge-item">
+                    <i class="fas fa-shield-check"></i>
+                    <span>Datos Encriptados AES-256</span>
+                </div>
+                <div class="security-badge-item">
+                    <i class="fas fa-lock"></i>
+                    <span>SSL/TLS 1.3 Seguro</span>
+                </div>
+                <div class="security-badge-item">
+                    <i class="fas fa-user-lock"></i>
+                    <span>RGPD/GDPR Compliant</span>
+                </div>
+                <div class="security-badge-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Sin Acceso No Autorizado</span>
+                </div>
+            </div>
+            
+            <div class="security-notice">
+                <i class="fas fa-info-circle"></i>
+                <p><strong>Compromiso de Transparencia:</strong> Te notificaremos de cualquier violación de seguridad que pueda afectar tus datos en un plazo máximo de 72 horas, conforme al RGPD. Tus datos son tuyos y solo tuyos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2 class="contact-title">¿Tienes Preguntas?</h2>
+                    <p class="contact-description">
+                        Nuestro equipo está aquí para ayudarte. Contáctanos y te responderemos lo antes posible.
+                    </p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:unabayona323@gmail.com">unabayona323@gmail.com</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Teléfono / Bizum</h4>
+                                <p><a href="tel:+34627039947">+34 627 039 947</a></p>
+                                <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.25rem;">Bizum: 627039947</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Ubicación</h4>
+                                <p>Madrid, España</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Link to Payment Methods Section -->
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md); text-align: center;">
+                        <a href="#metodos-pago" class="btn btn-outline" onclick="scrollToSection('metodos-pago'); return false;">
+                            <i class="fas fa-credit-card"></i> Ver Métodos de Pago
+                        </a>
+                        <a href="fondo-comun.html" class="btn btn-outline" style="margin-left: 0.5rem;">
+                            <i class="fas fa-heart"></i> Fondo Común
+                        </a>
+                    </div>
+                    
+                    <!-- Payment Methods Section (Collapsible) -->
+                    <div id="metodos-pago" class="collapsible-section" style="margin-top: 2rem;">
+                        <button class="collapsible-btn" onclick="toggleCollapsible(event)">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0; color: var(--text-primary);">
+                                <i class="fas fa-credit-card"></i> Métodos de Pago Disponibles
+                            </h3>
+                            <i class="fas fa-chevron-down collapsible-icon"></i>
+                        </button>
+                        <div class="collapsible-content" style="display: none;">
+                    <div class="payment-methods-section" style="padding: 1.5rem; background: var(--bg-secondary); border-radius: var(--radius-lg); margin-top: 1rem;">
+                        <div class="payment-methods-grid" style="display: grid; gap: 1rem;">
+                            <div class="payment-method-item" style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                                <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color);">
+                                    <i class="fas fa-mobile-alt"></i> Bizum
+                                </h4>
+                                <p style="font-size: 0.875rem; color: var(--text-secondary);">627039947</p>
+                            </div>
+                            
+                            <div class="payment-method-item" style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                                <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color);">
+                                    <i class="fab fa-paypal"></i> PayPal
+                                </h4>
+                                <p style="font-size: 0.875rem; color: var(--text-secondary);">whatsupub5@gmail.com</p>
+                                <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.25rem;">unay_3_3@hotmail.com</p>
+                            </div>
+                            
+                            <div class="payment-method-item" style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                                <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color);">
+                                    <i class="fas fa-university"></i> Revolut
+                                </h4>
+                                <p style="font-size: 0.75rem; color: var(--text-secondary); font-family: monospace;">ES4515830001109023438724</p>
+                                <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem;">Unay Bayona</p>
+                            </div>
+                            
+                            <div class="payment-method-item" style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                                <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color);">
+                                    <i class="fas fa-university"></i> IMAGIN (Caixa)
+                                </h4>
+                                <p style="font-size: 0.75rem; color: var(--text-secondary); font-family: monospace;">ES5821003114052200224277</p>
+                                <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem;">Unay Bayona</p>
+                            </div>
+                            
+                            <div class="payment-method-item" style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                                <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color);">
+                                    <i class="fas fa-university"></i> SumUp
+                                </h4>
+                                <p style="font-size: 0.75rem; color: var(--text-secondary); font-family: monospace;">IE40SUMU99036510405775</p>
+                                <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem;">Unay Bayona</p>
+                            </div>
+                            
+                            <div class="payment-method-item" style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                                <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color);">
+                                    <i class="fas fa-university"></i> BBVA (Cuenta 1)
+                                </h4>
+                                <p style="font-size: 0.75rem; color: var(--text-secondary); font-family: monospace;">ES28 0182 4039 9602 0162 0634</p>
+                                <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem;">Randon Unay Bayona Prada</p>
+                            </div>
+                            
+                            <div class="payment-method-item" style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                                <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color);">
+                                    <i class="fas fa-university"></i> BBVA (Cuenta 2)
+                                </h4>
+                                <p style="font-size: 0.75rem; color: var(--text-secondary); font-family: monospace;">ES64 0182 4039 9102 0161 9746</p>
+                                <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem;">Randon Unay Bayona Prada</p>
+                            </div>
+                            
+                            <div class="payment-method-item" style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                                <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary-color);">
+                                    <i class="fas fa-dollar-sign"></i> Zelle (EEUU)
+                                </h4>
+                                <p style="font-size: 0.875rem; color: var(--text-secondary);">unaybayona323@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="creator-info">
+                        <div class="creator-card">
+                            <h3><i class="fas fa-user-circle"></i> Creador de la Plataforma</h3>
+                            <p><strong>Unay Bayona</strong></p>
+                            <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.875rem; margin-top: 0.5rem;">
+                                Desarrollador y creador de RIFAS UBIA
+                            </p>
+                            <div class="creator-links">
+                                <a href="https://linktr.ee/unaybayona" target="_blank" class="btn btn-outline btn-small">
+                                    <i class="fas fa-external-link-alt"></i> Ver Perfil Completo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="contactName" placeholder="Tu nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" id="contactEmail" placeholder="Tu email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select id="contactSubject" required>
+                                <option value="">Selecciona un tema</option>
+                                <option value="general">Consulta General</option>
+                                <option value="tecnico">Soporte Técnico</option>
+                                <option value="pago">Problemas de Pago</option>
+                                <option value="rifa">Crear Rifa</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="contactMessage" placeholder="Tu mensaje" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-paper-plane"></i>
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/logo-ub.png" alt="RIFAS UB" class="logo" onerror="this.style.display='none'">
+                        <span class="logo-text">RIFAS UBIA</span>
+                    </div>
+                    <p class="footer-description">
+                        La plataforma líder de rifas digitales. 
+                        Transparencia, seguridad y confiabilidad garantizada.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Inicio</a></li>
+                        <li><a href="#rifas">Rifas Activas</a></li>
+                        <li><a href="#como-funciona">¿Cómo Funciona?</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Soporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="centro-ayuda.html">Centro de Ayuda</a></li>
+                        <li><a href="terminos-condiciones.html">Términos y Condiciones</a></li>
+                        <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+                        <li><a href="preguntas-frecuentes.html">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Contacto</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:unabayona323@gmail.com">unabayona323@gmail.com</a></p>
+                        <p><i class="fas fa-phone"></i> <a href="tel:+34627039947">+34 627 039 947</a></p>
+                        <p style="font-size: 0.875rem; color: var(--text-light);"><i class="fas fa-mobile-alt"></i> Bizum: 627039947</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Madrid, España</p>
+                    </div>
+                </div>
+                
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Creador</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                        Plataforma desarrollada por
+                    </p>
+                    <p style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-white);">Unay Bayona</p>
+                    <a href="https://linktr.ee/unaybayona" target="_blank" class="footer-link">
+                        <i class="fas fa-external-link-alt"></i> Ver Perfil
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Redes Sociales Desplegable -->
+            <div class="social-collapsible-section">
+                <button class="social-collapsible-btn" id="socialToggleBtn">
+                    <span>Redes Sociales</span>
+                    <i class="fas fa-chevron-down" id="socialToggleIcon"></i>
+                </button>
+                <div class="social-collapsible-content" id="socialCollapsibleContent">
+                    <div class="social-links-grid-footer">
+                        <a href="https://linktr.ee/unaybayona" target="_blank" class="social-link-footer" title="Linktree - Tarjeta de Presentación">
+                            <i class="fas fa-link"></i>
+                            <span>Linktree</span>
+                        </a>
+                        <a href="https://www.instagram.com/unaybayona" target="_blank" class="social-link-footer" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="https://www.facebook.com/unaybayona323" target="_blank" class="social-link-footer" title="Facebook">
+                            <i class="fab fa-facebook"></i>
+                            <span>Facebook</span>
+                        </a>
+                        <a href="https://www.facebook.com/UnayBayona" target="_blank" class="social-link-footer" title="Página Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Página Facebook</span>
+                        </a>
+                        <a href="https://x.com/unaybayona" target="_blank" class="social-link-footer" title="X (Twitter)">
+                            <i class="fab fa-x-twitter"></i>
+                            <span>X (Twitter)</span>
+                        </a>
+                        <a href="https://www.tiktok.com/@unaybayona" target="_blank" class="social-link-footer" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                            <span>TikTok</span>
+                        </a>
+                        <a href="https://youtube.com/@unaybayona" target="_blank" class="social-link-footer" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                            <span>YouTube</span>
+                        </a>
+                        <a href="https://t.me/Unaybayona" target="_blank" class="social-link-footer" title="Telegram">
+                            <i class="fab fa-telegram"></i>
+                            <span>Telegram</span>
+                        </a>
+                        <a href="https://open.spotify.com/user/31p6q56j6mlpymcqmftwz46xlr4u" target="_blank" class="social-link-footer" title="Spotify">
+                            <i class="fab fa-spotify"></i>
+                            <span>Spotify</span>
+                        </a>
+                        <a href="https://on.soundcloud.com/UPdsMYZvk1vQn6FV8" target="_blank" class="social-link-footer" title="SoundCloud">
+                            <i class="fab fa-soundcloud"></i>
+                            <span>SoundCloud</span>
+                        </a>
+                        <a href="https://music.amazon.es/profiles/sg4lvqjp2gawbmh66toa37yn5i" target="_blank" class="social-link-footer" title="Amazon Music">
+                            <i class="fab fa-amazon"></i>
+                            <span>Amazon Music</span>
+                        </a>
+                        <a href="https://pin.it/3PEzNJD3N" target="_blank" class="social-link-footer" title="Pinterest">
+                            <i class="fab fa-pinterest"></i>
+                            <span>Pinterest</span>
+                        </a>
+                        <a href="https://mobile.capcutshare.com/sv2/ZSADtC14s/" target="_blank" class="social-link-footer" title="CapCut - Plantillas">
+                            <i class="fas fa-video"></i>
+                            <span>CapCut</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="security-footer-badges">
+                    <div class="footer-security-badge">
+                        <i class="fas fa-lock"></i>
+                        <span>Datos 100% Encriptados</span>
+                    </div>
+                    <div class="footer-security-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Sin Acceso No Autorizado</span>
+                    </div>
+                    <div class="footer-security-badge">
+                        <i class="fas fa-user-shield"></i>
+                        <span>RGPD/GDPR Compliant</span>
+                    </div>
+                    <div class="footer-security-badge">
+                        <i class="fas fa-gavel"></i>
+                        <span>Respeto a la Privacidad</span>
+                    </div>
+                </div>
+                <p>&copy; 2024 RIFAS UBIA. Todos los derechos reservados.</p>
+                <p style="font-size: 0.75rem; opacity: 0.7; margin-top: 0.5rem;">
+                    Sede Legal: Madrid, España | Regulada por legislación española y RGPD/GDPR
+                </p>
+                <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.5rem; color: var(--text-white);">
+                    <i class="fas fa-shield-check"></i> <strong>Tus datos están completamente protegidos.</strong> Nadie puede acceder a ellos sin tu autorización, excepto en casos excepcionales requeridos por orden judicial o autoridad competente legalmente autorizada.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Iniciar Sesión</h2>
+                <span class="close" id="closeLogin">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Contraseña</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe">
+                            <span class="checkmark"></span>
+                            Recordarme
+                        </label>
+                        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large">Iniciar Sesión</button>
+                </form>
+                
+                <div class="auth-divider">
+                    <span>O continúa con</span>
+                </div>
+                
+                <div class="social-login-buttons">
+                    <button class="btn-social-login btn-google" onclick="handleOAuthLogin('google')">
+                        <i class="fab fa-google"></i>
+                        <span>Google</span>
+                    </button>
+                    <button class="btn-social-login btn-microsoft" onclick="handleOAuthLogin('microsoft')">
+                        <i class="fab fa-microsoft"></i>
+                        <span>Microsoft</span>
+                    </button>
+                    <button class="btn-social-login btn-apple" onclick="handleOAuthLogin('apple')">
+                        <i class="fab fa-apple"></i>
+                        <span>Apple</span>
+                    </button>
+                    <button class="btn-social-login btn-atlassian" onclick="handleOAuthLogin('atlassian')">
+                        <i class="fab fa-atlassian"></i>
+                        <span>Atlassian</span>
+                    </button>
+                </div>
+                
+                <div class="modal-footer">
+                    <p>¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Crear Cuenta</h2>
+                <span class="close" id="closeRegister">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="registerFirstName">Nombre</label>
+                            <input type="text" id="registerFirstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerLastName">Apellido</label>
+                            <input type="text" id="registerLastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <div class="email-verify-container">
+                            <input type="email" id="registerEmail" required onblur="checkEmailAvailability(this.value)">
+                            <button type="button" class="btn-verify-email" id="verifyEmailBtn" onclick="sendVerificationEmail()" style="display: none;">
+                                <i class="fas fa-envelope"></i> Verificar
+                            </button>
+                        </div>
+                        <div id="emailVerificationStatus" class="verification-status" style="display: none;">
+                            <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                            <span>Correo verificado correctamente</span>
+                        </div>
+                        <div id="emailVerificationPending" class="verification-status" style="display: none;">
+                            <i class="fas fa-clock" style="color: #f59e0b;"></i>
+                            <span>Revisa tu correo y haz clic en el enlace de verificación</span>
+                        </div>
+                        <small class="form-help">Tu correo debe ser verificado para completar el registro</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Contraseña</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">Confirmar Contraseña</label>
+                        <input type="password" id="registerConfirmPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPhone">Teléfono</label>
+                        <input type="tel" id="registerPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="acceptTerms" required>
+                            <span class="checkmark"></span>
+                            Acepto los <a href="terminos-condiciones.html" target="_blank">términos y condiciones</a> y la <a href="politica-privacidad.html" target="_blank">política de privacidad</a>
+                        </label>
+                    </div>
+                    
+                    <!-- Security Notice in Registration -->
+                    <div class="registration-security-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Protección de tus Datos</strong>
+                            <p>Todos tus datos personales están <strong>completamente encriptados</strong> con AES-256 (nivel bancario). Nadie puede acceder a ellos sin tu autorización, excepto en casos excepcionales requeridos por orden judicial o autoridad competente legalmente autorizada.</p>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-large" id="registerSubmitBtn" disabled>
+                        <i class="fas fa-user-plus"></i> Crear Cuenta
+                    </button>
+                    <small class="form-help" id="emailVerificationRequired" style="color: var(--danger-color); display: none;">
+                        <i class="fas fa-exclamation-circle"></i> Debes verificar tu correo electrónico antes de continuar
+                    </small>
+                </form>
+                
+                <div class="auth-divider">
+                    <span>O regístrate con</span>
+                </div>
+                
+                <div class="social-login-buttons">
+                    <button class="btn-social-login btn-google" onclick="handleOAuthRegister('google')">
+                        <i class="fab fa-google"></i>
+                        <span>Google</span>
+                    </button>
+                    <button class="btn-social-login btn-microsoft" onclick="handleOAuthRegister('microsoft')">
+                        <i class="fab fa-microsoft"></i>
+                        <span>Microsoft</span>
+                    </button>
+                    <button class="btn-social-login btn-apple" onclick="handleOAuthRegister('apple')">
+                        <i class="fab fa-apple"></i>
+                        <span>Apple</span>
+                    </button>
+                    <button class="btn-social-login btn-atlassian" onclick="handleOAuthRegister('atlassian')">
+                        <i class="fab fa-atlassian"></i>
+                        <span>Atlassian</span>
+                    </button>
+                </div>
+                
+                <div class="modal-footer">
+                    <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget" id="chatbotWidget">
+        <div class="chatbot-button" id="chatbotButton" onclick="toggleChatbot()">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-badge">1</span>
+        </div>
+        
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-header-info">
+                    <div class="chatbot-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <h3>Asistente IA</h3>
+                        <p class="chatbot-status">
+                            <i class="fas fa-circle"></i>
+                            En línea 24/7
+                        </p>
+                    </div>
+                </div>
+                <button class="chatbot-close" onclick="toggleChatbot()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="chatbot-message ai-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>¡Hola! 👋 Soy tu asistente de IA de RIFAS UBIA. ¿En qué puedo ayudarte hoy?</p>
+                        <small>Puedo ayudarte con información sobre rifas, compras, pagos y más.</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-suggestions" id="chatbotSuggestions">
+                <button class="suggestion-btn" onclick="sendSuggestion('¿Cómo funciona RIFAS UBIA?')">
+                    ¿Cómo funciona?
+                </button>
+                <button class="suggestion-btn" onclick="sendSuggestion('¿Cómo compro un número?')">
+                    ¿Cómo compro?
+                </button>
+                <button class="suggestion-btn" onclick="sendSuggestion('¿Qué métodos de pago aceptan?')">
+                    Métodos de pago
+                </button>
+            </div>
+            
+            <div class="chatbot-input-container">
+                <input type="text" id="chatbotInput" placeholder="Escribe tu mensaje..." onkeypress="handleChatbotKeyPress(event)">
+                <button class="chatbot-send" onclick="sendChatbotMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reviews.js"></script>
+    <script src="js/rifas.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

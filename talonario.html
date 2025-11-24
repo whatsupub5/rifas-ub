@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talonario - RIFAS UBIA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .talonario-container {
+            padding: 2rem;
+        }
+        .talonario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .talonario-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .talonario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.5rem;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+        }
+        .number-cell {
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-weight: 700;
+            font-family: monospace;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+        .number-cell.available {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        .number-cell.available:hover {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.1);
+        }
+        .number-cell.reserved {
+            background: var(--warning-color);
+            color: white;
+            border-color: var(--warning-color);
+        }
+        .number-cell.sold {
+            background: var(--text-light);
+            color: white;
+            border-color: var(--text-light);
+            cursor: not-allowed;
+        }
+        .number-cell.selected {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        .number-info {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-dark);
+            color: white;
+            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition-fast);
+            margin-bottom: 0.5rem;
+        }
+        .number-cell:hover .number-info {
+            opacity: 1;
+        }
+        .talonario-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-box {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+        .stat-box-number {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .stat-box-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .stat-box.available .stat-box-number { color: var(--success-color); }
+        .stat-box.reserved .stat-box-number { color: var(--warning-color); }
+        .stat-box.sold .stat-box-number { color: var(--text-light); }
+        .stat-box.total .stat-box-number { color: var(--primary-color); }
+    </style>
+</head>
+<body class="dashboard-body">
+    <div class="talonario-container">
+        <div class="talonario-header">
+            <div>
+                <h1 id="rifaTitle">Talonario de Rifa</h1>
+                <p id="rifaSubtitle" style="color: var(--text-secondary);">Gestiona los números de tu rifa</p>
+            </div>
+            <button class="btn btn-outline" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i> Volver
+            </button>
+        </div>
+
+        <div class="talonario-stats" id="talonarioStats">
+            <!-- Se llenará dinámicamente -->
+        </div>
+
+        <div class="talonario-filters">
+            <button class="btn btn-outline" onclick="filterNumbers('all')">
+                Todos
+            </button>
+            <button class="btn btn-outline" onclick="filterNumbers('available')">
+                Disponibles
+            </button>
+            <button class="btn btn-outline" onclick="filterNumbers('reserved')">
+                Reservados
+            </button>
+            <button class="btn btn-outline" onclick="filterNumbers('sold')">
+                Vendidos
+            </button>
+            <input type="text" id="searchNumber" placeholder="Buscar número..." 
+                   style="flex: 1; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+
+        <div class="talonario-grid" id="talonarioGrid">
+            <!-- Se llenará dinámicamente -->
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/rifas.js"></script>
+    <script src="js/talonario.js"></script>
+</body>
+</html>

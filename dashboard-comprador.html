@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Comprador - RIFAS UB</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/logo-ub.png" alt="RIFAS UB" class="logo" onerror="this.style.display='none'">
+            <span class="logo-text">RIFAS UB</span>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#overview" class="sidebar-link active">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
+            </a>
+            <a href="#mis-compras" class="sidebar-link">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Mis Compras</span>
+            </a>
+            <a href="#mis-pagos" class="sidebar-link">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Mis Pagos</span>
+            </a>
+            <a href="#historial" class="sidebar-link">
+                <i class="fas fa-history"></i>
+                <span>Historial</span>
+            </a>
+            <a href="#explorar" class="sidebar-link">
+                <i class="fas fa-search"></i>
+                <span>Explorar Rifas</span>
+            </a>
+            <a href="#favoritos" class="sidebar-link">
+                <i class="fas fa-heart"></i>
+                <span>Favoritos</span>
+            </a>
+            <a href="#perfil" class="sidebar-link">
+                <i class="fas fa-user"></i>
+                <span>Mi Perfil</span>
+            </a>
+            <a href="#generador-ia" class="sidebar-link">
+                <i class="fas fa-magic"></i>
+                <span>Generador IA</span>
+            </a>
+            <a href="verificacion-identidad.html" class="sidebar-link">
+                <i class="fas fa-id-card"></i>
+                <span>Verificación de Identidad</span>
+            </a>
+            <a href="#calificaciones-recibidas" class="sidebar-link">
+                <i class="fas fa-star"></i>
+                <span>Calificaciones Recibidas</span>
+            </a>
+            <a href="#estado-cliente" class="sidebar-link">
+                <i class="fas fa-user-check"></i>
+                <span>Mi Estado de Cliente</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="index.html" class="sidebar-link">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver al Inicio</span>
+            </a>
+            <button class="sidebar-link" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="dashboard-title">Dashboard de Comprador</h1>
+            </div>
+            
+            <div class="header-right">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar rifas...">
+                </div>
+                
+                <button class="header-icon" id="notificationsBtn" onclick="showNotificationsCenter()">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge" id="notificationBadge" style="display: none;">0</span>
+                </button>
+                
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Usuario+Demo" alt="Usuario" class="user-avatar">
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Usuario Demo</span>
+                        <span class="user-role">Comprador</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Security Notice -->
+        <div class="dashboard-security-notice">
+            <i class="fas fa-shield-alt"></i>
+            <div>
+                <strong>Tus datos están completamente protegidos</strong>
+                <p>Todos tus datos personales están encriptados con <strong>AES-256</strong> (nivel bancario). Nadie puede acceder a ellos sin tu autorización, excepto en casos excepcionales requeridos por orden judicial o autoridad competente legalmente autorizada.</p>
+            </div>
+            <a href="politica-privacidad.html" class="btn btn-outline btn-small">Ver detalles</a>
+        </div>
+
+        <!-- Stats Cards -->
+        <section class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon" style="background-color: #3b82f6;">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">Mis Boletos</span>
+                    <span class="stat-value">12</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon" style="background-color: #10b981;">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">Rifas Ganadas</span>
+                    <span class="stat-value">2</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon" style="background-color: #f59e0b;">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">En Proceso</span>
+                    <span class="stat-value">8</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon" style="background-color: #8b5cf6;">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">Total Invertido</span>
+                    <span class="stat-value">$45,000</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mis Rifas Activas -->
+        <section class="dashboard-section">
+            <div class="section-header-dashboard">
+                <h2>Mis Rifas Activas</h2>
+                <a href="#explorar" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Comprar Más Boletos
+                </a>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Rifa</th>
+                            <th>Número</th>
+                            <th>Precio</th>
+                            <th>Fecha Sorteo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="table-rifa-info">
+                                    <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=100" alt="iPhone">
+                                    <span>iPhone 15 Pro Max</span>
+                                </div>
+                            </td>
+                            <td><span class="number-badge">042</span></td>
+                            <td>$5,000</td>
+                            <td>31 Dic 2024</td>
+                            <td><span class="badge-status badge-active">Activa</span></td>
+                            <td>
+                                <button class="btn-icon" title="Ver Detalles">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon" title="Descargar Boleto">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="table-rifa-info">
+                                    <img src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=100" alt="PS5">
+                                    <span>PlayStation 5</span>
+                                </div>
+                            </td>
+                            <td><span class="number-badge">127</span></td>
+                            <td>$3,000</td>
+                            <td>25 Dic 2024</td>
+                            <td><span class="badge-status badge-active">Activa</span></td>
+                            <td>
+                                <button class="btn-icon" title="Ver Detalles">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon" title="Descargar Boleto">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Winner Confirmation Section -->
+        <section class="dashboard-section" id="winnerSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-trophy"></i> ¡Felicidades, Ganaste!</h2>
+            </div>
+            <div class="winner-alert" id="winnerAlert">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Historial de Compras -->
+        <section class="dashboard-section" id="historialSection">
+            <div class="section-header-dashboard">
+                <h2>Historial de Compras</h2>
+                <div class="header-actions">
+                    <select id="historialFilter" class="filter-select">
+                        <option value="all">Todas</option>
+                        <option value="active">Activas</option>
+                        <option value="completed">Completadas</option>
+                        <option value="won">Ganadas</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Rifa</th>
+                            <th>Número</th>
+                            <th>Precio</th>
+                            <th>Fecha Compra</th>
+                            <th>Estado Pago</th>
+                            <th>Estado Rifa</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historialTableBody">
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Rifas Recomendadas -->
+        <section class="dashboard-section">
+            <div class="section-header-dashboard">
+                <h2>Rifas Recomendadas</h2>
+                <a href="index.html#rifas" class="text-link">Ver Todas <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="rifas-grid" id="recommendedRifas">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Favoritos Section -->
+        <section class="dashboard-section" id="favoritosSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-heart"></i> Mis Favoritos</h2>
+                <p>Rifas que has guardado para ver más tarde</p>
+            </div>
+            
+            <div class="rifas-grid" id="favoritosGrid">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Explorar Rifas Section -->
+        <section class="dashboard-section" id="explorarSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-search"></i> Explorar Rifas</h2>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="explorarSearch" placeholder="Buscar rifas..." onkeyup="filterExplorarRifas()">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="sales-filters" style="background: var(--bg-primary); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 2rem; box-shadow: var(--shadow-sm);">
+                <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label>Precio Mínimo</label>
+                        <input type="number" id="explorarPrecioMin" placeholder="0" min="0" onchange="filterExplorarRifas()">
+                    </div>
+                    <div class="form-group">
+                        <label>Precio Máximo</label>
+                        <input type="number" id="explorarPrecioMax" placeholder="Sin límite" min="0" onchange="filterExplorarRifas()">
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Sorteo</label>
+                        <select id="explorarFechaFilter" class="filter-select" onchange="filterExplorarRifas()">
+                            <option value="all">Todas</option>
+                            <option value="today">Hoy</option>
+                            <option value="week">Esta Semana</option>
+                            <option value="month">Este Mes</option>
+                            <option value="upcoming">Próximas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ordenar por</label>
+                        <select id="explorarSort" class="filter-select" onchange="filterExplorarRifas()">
+                            <option value="newest">Más Recientes</option>
+                            <option value="oldest">Más Antiguas</option>
+                            <option value="price-low">Precio: Menor a Mayor</option>
+                            <option value="price-high">Precio: Mayor a Menor</option>
+                            <option value="popular">Más Populares</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="rifas-grid" id="explorarRifasGrid">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Mi Perfil Section -->
+        <section class="dashboard-section" id="perfilSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-user"></i> Mi Perfil</h2>
+                <p>Gestiona tu información personal y preferencias</p>
+            </div>
+            
+            <div class="form-dashboard">
+                <form id="perfilForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="perfilFirstName">Nombre *</label>
+                            <input type="text" id="perfilFirstName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="perfilLastName">Apellido *</label>
+                            <input type="text" id="perfilLastName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="perfilEmail">Email *</label>
+                            <input type="email" id="perfilEmail" required>
+                            <small>Tu email no se puede cambiar</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="perfilPhone">Teléfono</label>
+                            <input type="tel" id="perfilPhone" placeholder="+34 627 039 947">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Cambiar Contraseña</label>
+                            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+                                <button type="button" class="btn btn-outline" onclick="showChangePasswordModal()">
+                                    <i class="fas fa-key"></i> Cambiar Contraseña
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Preferencias de Notificaciones</label>
+                            <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md);">
+                                <label style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; cursor: pointer;">
+                                    <input type="checkbox" id="notifEmail" checked>
+                                    <span>Recibir notificaciones por email</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; cursor: pointer;">
+                                    <input type="checkbox" id="notifSMS" checked>
+                                    <span>Recibir notificaciones por SMS</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                    <input type="checkbox" id="notifPush" checked>
+                                    <span>Recibir notificaciones push</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                        <button type="button" class="btn btn-outline btn-large" onclick="resetPerfilForm()">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Generador IA Section -->
+        <section class="dashboard-section" id="generadorIaSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-magic"></i> Generador de IA</h2>
+                <p>Crea imágenes y videos con inteligencia artificial</p>
+            </div>
+            
+            <div style="text-align: center; padding: 3rem;">
+                <iframe src="ai-generator.html" style="width: 100%; height: 800px; border: none; border-radius: var(--radius-lg);"></iframe>
+            </div>
+        </section>
+
+        <!-- Reseñas Section -->
+        <section class="dashboard-section" id="reseñasSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-star"></i> Mis Reseñas y Calificaciones</h2>
+                <p>Deja reseñas sobre tus experiencias con los organizadores</p>
+            </div>
+
+            <!-- Pending Reviews -->
+            <div class="pending-reviews-section">
+                <h3>Rifas Pendientes de Calificar</h3>
+                <div id="pendingReviewsList" class="pending-reviews-list">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+
+            <!-- My Reviews -->
+            <div class="my-reviews-section">
+                <h3>Mis Reseñas Publicadas</h3>
+                <div id="myReviewsList" class="reviews-list">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Mis Compras Section -->
+        <section class="dashboard-section" id="misComprasSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-shopping-cart"></i> Mis Compras</h2>
+                <p>Todas tus compras de boletos de rifas detalladas</p>
+            </div>
+
+            <div class="stats-cards" style="margin-bottom: 2rem;">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #3b82f6;">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Compras</span>
+                        <span class="stat-value" id="totalCompras">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #10b981;">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Boletos</span>
+                        <span class="stat-value" id="totalBoletos">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #f59e0b;">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Gastado</span>
+                        <span class="stat-value" id="totalGastado">$0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #8b5cf6;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Compras Activas</span>
+                        <span class="stat-value" id="comprasActivas">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sales-filters" style="background: var(--bg-primary); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 2rem;">
+                <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label>Buscar</label>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="comprasSearch" placeholder="Nombre de rifa..." onkeyup="filterCompras()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select id="comprasStatusFilter" class="filter-select" onchange="filterCompras()">
+                            <option value="all">Todas</option>
+                            <option value="pending">Pendiente de Pago</option>
+                            <option value="paid">Pagadas</option>
+                            <option value="active">Activas</option>
+                            <option value="completed">Completadas</option>
+                            <option value="won">Ganadas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <select id="comprasDateFilter" class="filter-select" onchange="filterCompras()">
+                            <option value="all">Todas las fechas</option>
+                            <option value="today">Hoy</option>
+                            <option value="week">Esta semana</option>
+                            <option value="month">Este mes</option>
+                            <option value="year">Este año</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Rifa</th>
+                            <th>Organizador</th>
+                            <th>Números Comprados</th>
+                            <th>Total Pagado</th>
+                            <th>Fecha Compra</th>
+                            <th>Estado Pago</th>
+                            <th>Estado Rifa</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comprasTableBody">
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Mis Pagos Section -->
+        <section class="dashboard-section" id="misPagosSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-money-bill-wave"></i> Mis Pagos</h2>
+                <p>Historial completo de todos tus pagos realizados</p>
+            </div>
+
+            <div class="stats-cards" style="margin-bottom: 2rem;">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Pagos Completados</span>
+                        <span class="stat-value" id="pagosCompletados">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #f59e0b;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Pagos Pendientes</span>
+                        <span class="stat-value" id="pagosPendientes">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #ef4444;">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Pagos Rechazados</span>
+                        <span class="stat-value" id="pagosRechazados">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #3b82f6;">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Pagado</span>
+                        <span class="stat-value" id="totalPagado">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sales-filters" style="background: var(--bg-primary); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 2rem;">
+                <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label>Buscar</label>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="pagosSearch" placeholder="ID de transacción..." onkeyup="filterPagos()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select id="pagosStatusFilter" class="filter-select" onchange="filterPagos()">
+                            <option value="all">Todos</option>
+                            <option value="completed">Completados</option>
+                            <option value="pending">Pendientes</option>
+                            <option value="rejected">Rechazados</option>
+                            <option value="refunded">Reembolsados</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Método de Pago</label>
+                        <select id="pagosMethodFilter" class="filter-select" onchange="filterPagos()">
+                            <option value="all">Todos</option>
+                            <option value="revolut">Revolut</option>
+                            <option value="bizum">Bizum</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="tarjeta">Tarjeta</option>
+                            <option value="transferencia">Transferencia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID Transacción</th>
+                            <th>Rifa</th>
+                            <th>Monto</th>
+                            <th>Método de Pago</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Comprobante</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pagosTableBody">
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Calificaciones Recibidas Section -->
+        <section class="dashboard-section" id="calificacionesRecibidasSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-star"></i> Calificaciones Recibidas</h2>
+                <p>Calificaciones que los vendedores te han dado como comprador</p>
+            </div>
+
+            <div class="stats-cards" style="margin-bottom: 2rem;">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #f59e0b;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Calificación Promedio</span>
+                        <span class="stat-value" id="calificacionPromedio">0.0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #10b981;">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Calificaciones</span>
+                        <span class="stat-value" id="totalCalificaciones">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #3b82f6;">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Vendedores que Calificaron</span>
+                        <span class="stat-value" id="vendedoresCalificaron">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="calificacionesRecibidasList" class="reviews-list">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Estado del Cliente Section -->
+        <section class="dashboard-section" id="estadoClienteSection" style="display: none;">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-user-check"></i> Mi Estado de Cliente</h2>
+                <p>Tu historial y comportamiento como comprador en la plataforma</p>
+            </div>
+
+            <div class="client-status-card" id="clientStatusCard">
+                <div class="status-header">
+                    <div class="status-icon">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <div class="status-info">
+                        <h3 id="clientStatusTitle">Buen Cliente</h3>
+                        <p id="clientStatusDescription">Tu historial es excelente. Sigues así.</p>
+                    </div>
+                </div>
+
+                <div class="status-badges">
+                    <div class="status-badge" id="badgeBuenCliente">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Buen Cliente</span>
+                    </div>
+                    <div class="status-badge" id="badgeMoroso" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Cliente Moroso</span>
+                    </div>
+                    <div class="status-badge badge-danger" id="badgeInfractor" style="display: none;">
+                        <i class="fas fa-ban"></i>
+                        <span>Infractor de Normas</span>
+                    </div>
+                </div>
+
+                <div class="status-stats">
+                    <div class="status-stat-item">
+                        <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                        <div>
+                            <strong id="pagosAlDia">0</strong>
+                            <span>Pagos al Día</span>
+                        </div>
+                    </div>
+                    <div class="status-stat-item">
+                        <i class="fas fa-clock" style="color: #f59e0b;"></i>
+                        <div>
+                            <strong id="pagosRetrasados">0</strong>
+                            <span>Pagos Retrasados</span>
+                        </div>
+                    </div>
+                    <div class="status-stat-item">
+                        <i class="fas fa-times-circle" style="color: #ef4444;"></i>
+                        <div>
+                            <strong id="pagosRechazadosCliente">0</strong>
+                            <span>Pagos Rechazados</span>
+                        </div>
+                    </div>
+                    <div class="status-stat-item">
+                        <i class="fas fa-star" style="color: #f59e0b;"></i>
+                        <div>
+                            <strong id="calificacionPromedioCliente">0.0</strong>
+                            <span>Calificación Promedio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-details">
+                    <h4>Detalles del Estado</h4>
+                    <div id="statusDetailsContent">
+                        <p>No hay detalles adicionales disponibles.</p>
+                    </div>
+                </div>
+
+                <div class="status-actions">
+                    <button class="btn btn-primary" onclick="mejorarEstadoCliente()">
+                        <i class="fas fa-arrow-up"></i> Ver Cómo Mejorar mi Estado
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/rifas.js"></script>
+    <script src="js/payments.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/verificacion-identidad.js"></script>
+    <script src="js/reviews.js"></script>
+    <script src="js/dashboard-comprador.js"></script>
+</body>
+</html>
+

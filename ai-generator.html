@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Contenido IA - RIFAS UBIA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/ai-generator.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/logo-ub.png" alt="RIFAS UBIA" class="logo" onerror="this.style.display='none'">
+            <span class="logo-text">RIFAS UBIA</span>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#generador-imagenes" class="sidebar-link active">
+                <i class="fas fa-image"></i>
+                <span>Generar Imágenes</span>
+            </a>
+            <a href="#generador-videos" class="sidebar-link">
+                <i class="fas fa-video"></i>
+                <span>Generar Videos</span>
+            </a>
+            <a href="#chat-ia" class="sidebar-link">
+                <i class="fas fa-robot"></i>
+                <span>Chat con IA</span>
+            </a>
+            <a href="#mis-creaciones" class="sidebar-link">
+                <i class="fas fa-folder"></i>
+                <span>Mis Creaciones</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="index.html" class="sidebar-link">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver al Inicio</span>
+            </a>
+            <button class="sidebar-link" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="dashboard-title">Generador de Contenido con IA</h1>
+            </div>
+            
+            <div class="header-right">
+                <div class="ai-status">
+                    <i class="fas fa-circle" style="color: var(--success-color);"></i>
+                    <span>IA Disponible 24/7</span>
+                </div>
+                
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Usuario" alt="Usuario" class="user-avatar">
+                </div>
+            </div>
+        </header>
+
+        <!-- AI Provider Selection -->
+        <section class="ai-providers-section">
+            <div class="providers-header">
+                <h2>Selecciona tu Proveedor de IA</h2>
+                <p>Elige entre diferentes modelos de inteligencia artificial</p>
+            </div>
+            
+            <div class="providers-grid">
+                <div class="provider-card" data-provider="openai" onclick="selectProvider('openai')">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #10a37f, #1a7f72);">
+                        <i class="fab fa-openai"></i>
+                    </div>
+                    <h3>ChatGPT</h3>
+                    <p>OpenAI GPT-4</p>
+                    <span class="provider-badge">Recomendado</span>
+                </div>
+                
+                <div class="provider-card" data-provider="gemini" onclick="selectProvider('gemini')">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #4285f4, #34a853);">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h3>Gemini</h3>
+                    <p>Google AI</p>
+                </div>
+                
+                <div class="provider-card" data-provider="copilot" onclick="selectProvider('copilot')">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #0078d4, #005a9e);">
+                        <i class="fab fa-microsoft"></i>
+                    </div>
+                    <h3>Copilot</h3>
+                    <p>Microsoft AI</p>
+                </div>
+                
+                <div class="provider-card" data-provider="dalle" onclick="selectProvider('dalle')">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #10a37f, #1a7f72);">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>DALL-E</h3>
+                    <p>Generación de Imágenes</p>
+                </div>
+                
+                <div class="provider-card" data-provider="midjourney" onclick="selectProvider('midjourney')">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #000000, #333333);">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>Midjourney</h3>
+                    <p>Arte con IA</p>
+                </div>
+                
+                <div class="provider-card" data-provider="stable-diffusion" onclick="selectProvider('stable-diffusion')">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #8b5cf6, #6366f1);">
+                        <i class="fas fa-sparkles"></i>
+                    </div>
+                    <h3>Stable Diffusion</h3>
+                    <p>Open Source</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Generator Section -->
+        <section id="generador-imagenes" class="ai-section">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-image"></i> Generador de Imágenes</h2>
+            </div>
+            
+            <div class="ai-generator-container">
+                <div class="generator-form">
+                    <div class="form-group">
+                        <label for="imagePrompt">Describe la imagen que quieres crear *</label>
+                        <textarea id="imagePrompt" rows="4" placeholder="Ej: Un iPhone 15 Pro Max sobre un fondo moderno con iluminación profesional..." required></textarea>
+                        <small>Se más específico para mejores resultados</small>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="imageStyle">Estilo</label>
+                            <select id="imageStyle">
+                                <option value="realistic">Realista</option>
+                                <option value="artistic">Artístico</option>
+                                <option value="3d">3D</option>
+                                <option value="cartoon">Caricatura</option>
+                                <option value="minimalist">Minimalista</option>
+                                <option value="vintage">Vintage</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="imageSize">Tamaño</label>
+                            <select id="imageSize">
+                                <option value="1024x1024">1024x1024 (Cuadrado)</option>
+                                <option value="1024x1792">1024x1792 (Vertical)</option>
+                                <option value="1792x1024">1792x1024 (Horizontal)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="imageQuality">Calidad</label>
+                            <select id="imageQuality">
+                                <option value="standard">Estándar</option>
+                                <option value="hd">HD</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-large" onclick="generateImage()">
+                        <i class="fas fa-magic"></i> Generar Imagen
+                    </button>
+                </div>
+                
+                <div class="generator-preview">
+                    <div id="imagePreviewContainer" class="preview-container">
+                        <div class="preview-placeholder">
+                            <i class="fas fa-image" style="font-size: 4rem; color: var(--text-light); margin-bottom: 1rem;"></i>
+                            <p style="color: var(--text-secondary);">Tu imagen aparecerá aquí</p>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-actions" id="imageActions" style="display: none;">
+                        <button class="btn btn-primary" onclick="downloadImage()">
+                            <i class="fas fa-download"></i> Descargar
+                        </button>
+                        <button class="btn btn-outline" onclick="saveToGallery()">
+                            <i class="fas fa-save"></i> Guardar en Galería
+                        </button>
+                        <button class="btn btn-outline" onclick="regenerateImage()">
+                            <i class="fas fa-redo"></i> Regenerar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Generator Section -->
+        <section id="generador-videos" class="ai-section">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-video"></i> Generador de Videos</h2>
+            </div>
+            
+            <div class="ai-generator-container">
+                <div class="generator-form">
+                    <div class="form-group">
+                        <label for="videoPrompt">Describe el video que quieres crear *</label>
+                        <textarea id="videoPrompt" rows="4" placeholder="Ej: Un video promocional de 30 segundos mostrando un iPhone 15 Pro Max con animaciones suaves..." required></textarea>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="videoDuration">Duración</label>
+                            <select id="videoDuration">
+                                <option value="5">5 segundos</option>
+                                <option value="10">10 segundos</option>
+                                <option value="15">15 segundos</option>
+                                <option value="30">30 segundos</option>
+                                <option value="60">60 segundos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="videoResolution">Resolución</label>
+                            <select id="videoResolution">
+                                <option value="720p">720p HD</option>
+                                <option value="1080p">1080p Full HD</option>
+                                <option value="4k">4K UHD</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="videoStyle">Estilo</label>
+                            <select id="videoStyle">
+                                <option value="cinematic">Cinematográfico</option>
+                                <option value="modern">Moderno</option>
+                                <option value="dynamic">Dinámico</option>
+                                <option value="elegant">Elegante</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-large" onclick="generateVideo()">
+                        <i class="fas fa-video"></i> Generar Video
+                    </button>
+                </div>
+                
+                <div class="generator-preview">
+                    <div id="videoPreviewContainer" class="preview-container">
+                        <div class="preview-placeholder">
+                            <i class="fas fa-video" style="font-size: 4rem; color: var(--text-light); margin-bottom: 1rem;"></i>
+                            <p style="color: var(--text-secondary);">Tu video aparecerá aquí</p>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-actions" id="videoActions" style="display: none;">
+                        <button class="btn btn-primary" onclick="downloadVideo()">
+                            <i class="fas fa-download"></i> Descargar
+                        </button>
+                        <button class="btn btn-outline" onclick="saveVideoToGallery()">
+                            <i class="fas fa-save"></i> Guardar en Galería
+                        </button>
+                        <button class="btn btn-outline" onclick="regenerateVideo()">
+                            <i class="fas fa-redo"></i> Regenerar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Chat Section -->
+        <section id="chat-ia" class="ai-section">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-robot"></i> Asistente IA 24/7</h2>
+                <div class="chat-status">
+                    <i class="fas fa-circle" style="color: var(--success-color);"></i>
+                    <span>En línea</span>
+                </div>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message ai-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>¡Hola! Soy tu asistente de IA 24/7. ¿En qué puedo ayudarte hoy?</p>
+                            <small>Puedo ayudarte con:</small>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Crear descripciones para tus rifas</li>
+                                <li>Generar ideas de premios</li>
+                                <li>Ayudar con marketing y promoción</li>
+                                <li>Responder preguntas sobre la plataforma</li>
+                                <li>Y mucho más...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." onkeypress="handleChatKeyPress(event)">
+                        <button class="btn btn-primary" onclick="sendChatMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="chat-suggestions">
+                        <button class="suggestion-chip" onclick="sendSuggestion('Ayúdame a crear una descripción para mi rifa')">
+                            Crear descripción
+                        </button>
+                        <button class="suggestion-chip" onclick="sendSuggestion('Dame ideas de premios populares')">
+                            Ideas de premios
+                        </button>
+                        <button class="suggestion-chip" onclick="sendSuggestion('Cómo promocionar mi rifa')">
+                            Estrategias de marketing
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Creations Section -->
+        <section id="mis-creaciones" class="ai-section">
+            <div class="section-header-dashboard">
+                <h2><i class="fas fa-folder"></i> Mis Creaciones</h2>
+                <div class="header-actions">
+                    <select id="creationsFilter" class="filter-select">
+                        <option value="all">Todas</option>
+                        <option value="images">Imágenes</option>
+                        <option value="videos">Videos</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="creations-grid" id="creationsGrid">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/subscriptions.js"></script>
+    <script src="js/ai-generator.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Organizador - RIFAS UBIA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/perfil-organizador.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="index.html">
+                        <img src="assets/logo-ub.png" alt="RIFAS UBIA" class="logo" onerror="this.style.display='none'">
+                        <span class="logo-text">RIFAS UBIA</span>
+                    </a>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#rifas" class="nav-link">Rifas</a>
+                    </li>
+                </ul>
+                
+                <div class="nav-auth">
+                    <button class="btn btn-outline" onclick="window.location.href='index.html'">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Organizer Profile Section -->
+    <section class="organizer-profile-section" style="margin-top: 80px; padding: 3rem 0;">
+        <div class="container">
+            <div id="organizerProfileContent">
+                <!-- Se llenará dinámicamente -->
+                <div style="text-align: center; padding: 3rem;">
+                    <div class="loading"></div>
+                    <p>Cargando perfil del organizador...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reviews.js"></script>
+    <script src="js/perfil-organizador.js"></script>
+</body>
+</html>
+

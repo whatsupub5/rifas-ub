@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondo Común Social - RIFAS UBIA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/fondo-comun.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="index.html">
+                        <img src="assets/logo-ub.png" alt="RIFAS UBIA" class="logo" onerror="this.style.display='none'">
+                        <span class="logo-text">RIFAS UBIA</span>
+                    </a>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#rifas" class="nav-link">Rifas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="fondo-comun.html" class="nav-link active">Fondo Común</a>
+                    </li>
+                </ul>
+                
+                <div class="nav-auth">
+                    <button class="btn btn-outline" id="loginBtn">Iniciar Sesión</button>
+                    <button class="btn btn-primary" id="registerBtn">Registrarse</button>
+                </div>
+                
+                <div class="nav-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="fondo-hero">
+        <div class="container">
+            <div class="fondo-hero-content">
+                <div class="fondo-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h1 class="fondo-title">Fondo Común Social</h1>
+                <p class="fondo-subtitle">Juntos ayudamos a quienes más lo necesitan</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Total Recaudado -->
+    <section class="total-recaudado-section">
+        <div class="container">
+            <div class="total-recaudado-card">
+                <div class="total-recaudado-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <div class="total-recaudado-info">
+                    <p class="total-label">Total Recaudado</p>
+                    <h2 class="total-amount" id="totalAmount">$0</h2>
+                    <p class="total-description">Para ayudar a escuelas, iglesias, personas sin hogar y más</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo Funciona -->
+    <section class="como-funciona-section">
+        <div class="container">
+            <h2 class="section-title">¿Cómo Funciona?</h2>
+            <div class="como-funciona-grid">
+                <div class="como-funciona-card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Donaciones de la Comunidad</h3>
+                    <p>Jugadores y organizadores pueden aportar al fondo común. Puedes elegir si quieres aparecer como donante o donar de forma anónima.</p>
+                </div>
+                <div class="como-funciona-card">
+                    <div class="card-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3>1% de Nuestras Ganancias</h3>
+                    <p>RIFAS UBIA dona el 1% de todas las ganancias de la plataforma para hacer realidad estos proyectos sociales.</p>
+                </div>
+                <div class="como-funciona-card">
+                    <div class="card-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Ayuda Real</h3>
+                    <p>El dinero se utiliza para ayudar a escuelas, iglesias, personas sin hogar y otras causas sociales importantes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donar Section -->
+    <section class="donar-section">
+        <div class="container">
+            <div class="donar-content">
+                <div class="donar-info">
+                    <h2>Haz tu Donación</h2>
+                    <p>Tu contribución hace la diferencia. Puedes donar cualquier cantidad y elegir si quieres aparecer como donante o mantenerte anónimo.</p>
+                    <div class="donar-beneficios">
+                        <h3>El fondo ayuda a:</h3>
+                        <ul>
+                            <li><i class="fas fa-school"></i> Escuelas y educación</li>
+                            <li><i class="fas fa-church"></i> Iglesias y comunidades religiosas</li>
+                            <li><i class="fas fa-home"></i> Personas sin hogar</li>
+                            <li><i class="fas fa-heart"></i> Otras causas sociales</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="donar-form-container">
+                    <form id="donacionForm" class="donar-form">
+                        <div class="form-group">
+                            <label for="donacionAmount">Cantidad a Donar (COP) *</label>
+                            <div class="amount-input-group">
+                                <span class="amount-prefix">$</span>
+                                <input type="number" 
+                                       id="donacionAmount" 
+                                       class="form-control amount-input" 
+                                       min="1000" 
+                                       step="1000" 
+                                       placeholder="10000" 
+                                       required>
+                            </div>
+                            <small>Mínimo $1,000 COP</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="donacionMensaje">Mensaje (Opcional)</label>
+                            <textarea id="donacionMensaje" 
+                                      class="form-control" 
+                                      rows="3" 
+                                      placeholder="Deja un mensaje de apoyo..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="mostrarNombre" checked>
+                                <span>Mostrar mi nombre y cantidad en la lista de donantes</span>
+                            </label>
+                            <small>Si desmarcas esta opción, tu donación será anónima</small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-large btn-donar">
+                            <i class="fas fa-heart"></i> Donar Ahora
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donantes Section -->
+    <section class="donantes-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Donantes</h2>
+                <p class="section-subtitle">Gracias a todos los que hacen posible este fondo común</p>
+            </div>
+            
+            <div class="donantes-filters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="recent">Recientes</button>
+                <button class="filter-btn" data-filter="top">Mayores Donaciones</button>
+            </div>
+            
+            <div id="donantesList" class="donantes-list">
+                <!-- Se llenará dinámicamente -->
+            </div>
+            
+            <div id="donantesEmpty" class="donantes-empty" style="display: none;">
+                <i class="fas fa-heart"></i>
+                <p>Aún no hay donantes. ¡Sé el primero en contribuir!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estadísticas Section -->
+    <section class="estadisticas-section">
+        <div class="container">
+            <h2 class="section-title">Estadísticas del Fondo</h2>
+            <div class="estadisticas-grid">
+                <div class="estadistica-card">
+                    <div class="estadistica-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="estadistica-info">
+                        <h3 id="totalDonantes">0</h3>
+                        <p>Donantes</p>
+                    </div>
+                </div>
+                <div class="estadistica-card">
+                    <div class="estadistica-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="estadistica-info">
+                        <h3 id="donacionPromedio">$0</h3>
+                        <p>Donación Promedio</p>
+                    </div>
+                </div>
+                <div class="estadistica-card">
+                    <div class="estadistica-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="estadistica-info">
+                        <h3 id="contribucionPlataforma">$0</h3>
+                        <p>Contribución de RIFAS UBIA (1%)</p>
+                    </div>
+                </div>
+                <div class="estadistica-card">
+                    <div class="estadistica-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="estadistica-info">
+                        <h3 id="mesActual">$0</h3>
+                        <p>Este Mes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>RIFAS UBIA</h3>
+                    <p>Plataforma de rifas segura y transparente</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="index.html#rifas">Rifas</a></li>
+                        <li><a href="fondo-comun.html">Fondo Común</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terminos-condiciones.html">Términos y Condiciones</a></li>
+                        <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 RIFAS UBIA. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Iniciar Sesión</h2>
+                <span class="close" id="closeLogin">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Contraseña</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large">Iniciar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Registrarse</h2>
+                <span class="close" id="closeRegister">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerFirstName">Nombre</label>
+                        <input type="text" id="registerFirstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerLastName">Apellido</label>
+                        <input type="text" id="registerLastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Contraseña</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/fondo-comun.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Frecuentes - RIFAS UBIA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/legal-pages.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="index.html">
+                        <img src="assets/logo-ub.png" alt="RIFAS UBIA" class="logo" onerror="this.style.display='none'">
+                        <span class="logo-text">RIFAS UBIA</span>
+                    </a>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="centro-ayuda.html" class="nav-link">Centro de Ayuda</a>
+                    </li>
+                </ul>
+                
+                <div class="nav-auth">
+                    <button class="btn btn-outline" onclick="window.location.href='index.html'">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- FAQ Section -->
+    <section class="faq-page-section" style="margin-top: 80px; padding: 3rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">Preguntas Frecuentes</h1>
+                <p class="section-subtitle">Encuentra respuestas rápidas a las preguntas más comunes</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="help-search">
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="faqSearch" placeholder="Buscar preguntas...">
+                </div>
+            </div>
+
+            <!-- FAQ Categories -->
+            <div class="faq-categories-tabs">
+                <button class="faq-tab active" onclick="showFAQCategory('all')">Todas</button>
+                <button class="faq-tab" onclick="showFAQCategory('general')">General</button>
+                <button class="faq-tab" onclick="showFAQCategory('compras')">Compras</button>
+                <button class="faq-tab" onclick="showFAQCategory('organizadores')">Organizadores</button>
+                <button class="faq-tab" onclick="showFAQCategory('pagos')">Pagos</button>
+                <button class="faq-tab" onclick="showFAQCategory('sorteos')">Sorteos</button>
+            </div>
+
+            <!-- FAQ List -->
+            <div class="faq-list-container">
+                <div class="faq-list" id="faqListContainer">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Still Have Questions -->
+            <div class="contact-support">
+                <div class="support-card">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>¿Aún tienes preguntas?</h3>
+                    <p>Nuestro equipo está aquí para ayudarte</p>
+                    <div class="support-buttons">
+                        <a href="index.html#contacto" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i> Contactar Soporte
+                        </a>
+                        <a href="centro-ayuda.html" class="btn btn-outline">
+                            <i class="fas fa-life-ring"></i> Centro de Ayuda
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/preguntas-frecuentes.js"></script>
+</body>
+</html>
