@@ -58,22 +58,35 @@ async function loadRifaFromFirestore(rifaId) {
         const rifaData = rifaSnap.data();
         
         // Convertir datos de Firestore a formato esperado
+        const precio = rifaData.precio || rifaData.price || 0;
+        const moneda = rifaData.moneda || rifaData.currency || 'COP';
+        const titulo = rifaData.titulo || rifaData.title || 'Sin título';
+        
         const rifa = {
             id: rifaSnap.id,
-            title: rifaData.titulo || rifaData.title || 'Sin título',
+            title: titulo,
             description: rifaData.descripcion || rifaData.description || '',
             image: rifaData.imagenUrl || rifaData.image || 'assets/logo-ub.png',
             images: rifaData.imagenes || (rifaData.imagenUrl ? [rifaData.imagenUrl] : ['assets/logo-ub.png']),
-            price: rifaData.precio || rifaData.price || 0,
+            price: precio,
+            moneda: moneda,
             totalNumbers: rifaData.numerosTotales || rifaData.totalNumbers || 0,
             organizerId: rifaData.organizadorId || rifaData.organizerId,
             organizer: rifaData.organizador || rifaData.organizer || { name: 'Organizador', avatar: 'assets/logo-ub.png' },
             endDate: rifaData.fechaFin || rifaData.endDate,
             status: rifaData.estado || rifaData.status || 'active',
-            prize: rifaData.premio || rifaData.prize || rifaData.titulo || rifaData.title,
+            prize: rifaData.premio || rifaData.prize || titulo,
             conditions: rifaData.condiciones || rifaData.conditions || [],
             numerosVendidos: rifaData.numerosVendidos || []
         };
+        
+        // Log para debugging
+        console.log('📊 Datos cargados de Firestore:', {
+            titulo: titulo,
+            precio: precio,
+            moneda: moneda,
+            rifaCompleta: rifa
+        });
         
         // Validate rifa has required fields
         if (!rifa.title || !rifa.price || !rifa.totalNumbers) {
@@ -94,7 +107,17 @@ async function loadRifaFromFirestore(rifaId) {
 // Render rifa detail
 function renderRifaDetail(rifa) {
     const content = document.getElementById('rifaDetailContent');
-    if (!content) return;
+    if (!content) {
+        console.error('❌ Elemento rifaDetailContent no encontrado');
+        return;
+    }
+    
+    // Log para debugging
+    console.log('🎨 Renderizando rifa:', {
+        title: rifa.title,
+        price: rifa.price,
+        moneda: rifa.moneda
+    });
     
     // Get real sold numbers from Firestore (ya cargados en loadRifaFromFirestore)
     const numerosVendidos = rifa.numerosVendidos || [];
@@ -219,7 +242,7 @@ function renderRifaDetail(rifa) {
                         <i class="fas fa-ticket-alt"></i>
                         <div>
                             <span class="stat-label">Precio por Número</span>
-                            <span class="stat-value">$${formatNumber(rifa.price)}</span>
+                            <span class="stat-value">$${formatNumber(rifa.price)} ${rifa.moneda || 'COP'}</span>
                         </div>
                     </div>
                     
@@ -311,7 +334,7 @@ function renderRifaDetail(rifa) {
             </div>
             <div class="selected-number-info" id="selectedNumberInfo" style="display: none;">
                 <p>Número seleccionado: <strong id="selectedNumberDisplay"></strong></p>
-                <p>Precio: <strong>$${formatNumber(rifa.price)}</strong></p>
+                <p>Precio: <strong>$${formatNumber(rifa.price)} ${rifa.moneda || 'COP'}</strong></p>
                 <button class="btn btn-primary btn-large" onclick="proceedToPayment()">
                     Continuar con el Pago
                 </button>
