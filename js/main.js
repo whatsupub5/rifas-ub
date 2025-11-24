@@ -1,16 +1,16 @@
 // ========== MAIN APPLICATION LOGIC ==========
 
 // Format Number Function (define globally first)
+// Formatea un número con separadores de miles (formato colombiano)
 window.formatNumber = function(number, currency = 'COP') {
     if (typeof number !== 'number') {
         number = parseFloat(number) || 0;
     }
+    // Usar toLocaleString para formato colombiano (puntos como separadores de miles)
     return number.toLocaleString('es-CO', {
-        style: 'currency',
-        currency: currency,
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
-    }).replace('COP', '').trim();
+    });
 };
 
 // También como función sin prefijo window para compatibilidad
@@ -18,12 +18,11 @@ function formatNumber(number, currency = 'COP') {
     if (typeof number !== 'number') {
         number = parseFloat(number) || 0;
     }
+    // Usar toLocaleString para formato colombiano (puntos como separadores de miles)
     return number.toLocaleString('es-CO', {
-        style: 'currency',
-        currency: currency,
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
-    }).replace('COP', '').trim();
+    });
 }
 
 // Toast Notification Function (define globally first)
