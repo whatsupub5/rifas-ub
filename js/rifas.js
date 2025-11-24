@@ -192,7 +192,7 @@ function createRifaCard(rifa) {
 
 // Format number with thousands separator
 function formatNumber(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return new Intl.NumberFormat('es-CO').format(num);
 }
 
 // Format date
@@ -459,11 +459,6 @@ function updateHeroCard(rifa) {
     }
     
     console.log('✅ Hero card actualizado con datos de Firebase:', rifa);
-}
-
-// Función para formatear números
-function formatNumber(num) {
-    return new Intl.NumberFormat('es-CO').format(num);
 }
 
 // Función para ver rifa desde hero card
