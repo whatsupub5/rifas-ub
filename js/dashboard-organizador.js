@@ -512,7 +512,7 @@ async function handleCreateRifa(e) {
         reader.readAsDataURL(file);
     } else {
         // Use placeholder image
-        rifaData.image = 'https://via.placeholder.com/400x200?text=' + encodeURIComponent(rifaData.title);
+        rifaData.image = 'https://assets/logo-ub.png/400x200?text=' + encodeURIComponent(rifaData.title);
         saveRifa(rifaData, submitBtn, originalText);
     }
 }
@@ -608,10 +608,10 @@ function createRifaCardWithActions(rifa) {
     const remainingNumbers = rifa.totalNumbers - (rifa.soldNumbers || 0);
     
     card.innerHTML = `
-        <img src="${rifa.image || 'https://via.placeholder.com/400x200?text=' + encodeURIComponent(rifa.title)}" 
+        <img src="${rifa.image || 'https://assets/logo-ub.png/400x200?text=' + encodeURIComponent(rifa.title)}" 
              alt="${rifa.title}" 
              class="rifa-image"
-             onerror="this.src='https://via.placeholder.com/400x200?text=Sin+Imagen'">
+             onerror="this.src='https://assets/logo-ub.png/400x200?text=Sin+Imagen'">
         
         <div class="rifa-content">
             <h3 class="rifa-title">${rifa.title}</h3>
@@ -2171,10 +2171,10 @@ function createSorteoReadyCard(rifa) {
     );
     
     card.innerHTML = `
-        <img src="${rifa.image || 'https://via.placeholder.com/400x200?text=' + encodeURIComponent(rifa.title)}" 
+        <img src="${rifa.image || 'https://assets/logo-ub.png/400x200?text=' + encodeURIComponent(rifa.title)}" 
              alt="${rifa.title}" 
              class="rifa-image"
-             onerror="this.src='https://via.placeholder.com/400x200?text=Sin+Imagen'">
+             onerror="this.src='https://assets/logo-ub.png/400x200?text=Sin+Imagen'">
         
         <div class="rifa-content">
             <h3 class="rifa-title">${rifa.title}</h3>
@@ -2564,7 +2564,7 @@ function loadReportes(user) {
                 <tr>
                     <td>
                         <div class="table-rifa-info">
-                            <img src="${rifa.image || 'https://via.placeholder.com/100'}" alt="${rifa.title}" onerror="this.src='https://via.placeholder.com/100'">
+                            <img src="${rifa.image || 'https://assets/logo-ub.png/100'}" alt="${rifa.title}" onerror="this.src='https://assets/logo-ub.png/100'">
                             <span>${rifa.title}</span>
                         </div>
                     </td>

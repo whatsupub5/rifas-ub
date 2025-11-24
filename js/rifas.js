@@ -134,7 +134,7 @@ function createRifaCard(rifa) {
     const remainingNumbers = rifa.totalNumbers - rifa.soldNumbers;
     
     card.innerHTML = `
-        <img src="${rifa.image}" alt="${rifa.title}" class="rifa-image" onerror="this.src='https://via.placeholder.com/400x200?text=Sin+Imagen'">
+        <img src="${rifa.image}" alt="${rifa.title}" class="rifa-image" onerror="this.src='https://assets/logo-ub.png/400x200?text=Sin+Imagen'">
         
         <div class="rifa-content">
             <h3 class="rifa-title">${rifa.title}</h3>

@@ -247,10 +247,10 @@ function createOrganizerRifaCard(rifa) {
     
     return `
         <div class="organizer-rifa-card" onclick="viewRifaDetails('${rifa.id}')">
-            <img src="${rifa.image || 'https://via.placeholder.com/400x200'}" 
+            <img src="${rifa.image || 'https://assets/logo-ub.png/400x200'}" 
                  alt="${rifa.title}" 
                  class="organizer-rifa-image"
-                 onerror="this.src='https://via.placeholder.com/400x200?text=Sin+Imagen'">
+                 onerror="this.src='https://assets/logo-ub.png/400x200?text=Sin+Imagen'">
             <div class="organizer-rifa-content">
                 <span class="organizer-rifa-status ${statusClass}">${statusText}</span>
                 <h3 class="organizer-rifa-title">${rifa.title}</h3>

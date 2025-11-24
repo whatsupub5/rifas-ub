@@ -266,7 +266,7 @@ async function simulateImageGeneration(prompt, style, size, quality) {
             const [width, height] = size.split('x');
             
             // Use placeholder service (in production, use real API)
-            const imageUrl = `https://via.placeholder.com/${width}x${height}?text=${encodedPrompt}`;
+            const imageUrl = `https://assets/logo-ub.png/${width}x${height}?text=${encodedPrompt}`;
             resolve(imageUrl);
         }, 3000); // Simulate 3 second generation time
     });

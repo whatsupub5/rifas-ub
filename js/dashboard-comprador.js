@@ -331,7 +331,7 @@ function loadPendingReviews(userId) {
     container.innerHTML = pendingReviews.map(({ purchase, rifa }) => `
         <div class="pending-review-card">
             <div class="review-rifa-info">
-                <img src="${rifa.image || 'https://via.placeholder.com/100'}" alt="${rifa.title}" onerror="this.src='https://via.placeholder.com/100'">
+                <img src="${rifa.image || 'https://assets/logo-ub.png/100'}" alt="${rifa.title}" onerror="this.src='https://assets/logo-ub.png/100'">
                 <div>
                     <h4>${rifa.title}</h4>
                     <p>Organizador: ${rifa.organizer?.name || 'Organizador'}</p>
@@ -409,7 +409,7 @@ function openReviewModal(rifaId, organizerId, purchaseId) {
             <div class="modal-body">
                 <div class="review-modal-content">
                     <div class="review-rifa-preview">
-                        <img src="${rifa.image || 'https://via.placeholder.com/100'}" alt="${rifa.title}" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="${rifa.image || 'https://assets/logo-ub.png/100'}" alt="${rifa.title}" onerror="this.src='https://assets/logo-ub.png/100'">
                         <div>
                             <h3>${rifa.title}</h3>
                             <p>Organizador: ${rifa.organizer?.name || 'Organizador'}</p>
@@ -809,7 +809,7 @@ async function loadUserRifas(userId) {
                     price: purchase.price,
                     drawDate: purchase.endDate || rifa?.endDate,
                     status: purchase.rifaStatus,
-                    image: purchase.rifaImage || rifa?.image || 'https://via.placeholder.com/100'
+                    image: purchase.rifaImage || rifa?.image || 'https://assets/logo-ub.png/100'
                 };
             });
         
@@ -820,7 +820,7 @@ async function loadUserRifas(userId) {
                 <tr>
                     <td>
                         <div class="table-rifa-info">
-                            <img src="${rifa.image}" alt="${rifa.rifaTitle}" onerror="this.src='https://via.placeholder.com/100'">
+                            <img src="${rifa.image}" alt="${rifa.rifaTitle}" onerror="this.src='https://assets/logo-ub.png/100'">
                             <span>${rifa.rifaTitle}</span>
                         </div>
                     </td>
@@ -1053,9 +1053,9 @@ function createHistorialRow(purchase) {
     row.innerHTML = `
         <td>
             <div class="table-rifa-info">
-                <img src="${purchase.rifaImage || 'https://via.placeholder.com/100'}" 
+                <img src="${purchase.rifaImage || 'https://assets/logo-ub.png/100'}" 
                      alt="${purchase.rifaTitle}" 
-                     onerror="this.src='https://via.placeholder.com/100'">
+                     onerror="this.src='https://assets/logo-ub.png/100'">
                 <span>${purchase.rifaTitle}</span>
             </div>
         </td>
@@ -1213,7 +1213,7 @@ function loadFavoritos(userId) {
             const progressPercentage = ((rifa.soldNumbers || 0) / rifa.totalNumbers) * 100;
             return `
                 <div class="rifa-card">
-                    <img src="${rifa.image || 'https://via.placeholder.com/400x200'}" alt="${rifa.title}" class="rifa-image">
+                    <img src="${rifa.image || 'https://assets/logo-ub.png/400x200'}" alt="${rifa.title}" class="rifa-image">
                     <div class="rifa-content">
                         <h3 class="rifa-title">${rifa.title}</h3>
                         <p class="rifa-description">${rifa.description || ''}</p>
@@ -1374,7 +1374,7 @@ function filterExplorarRifas(allRifas = null) {
             const progressPercentage = ((rifa.soldNumbers || 0) / rifa.totalNumbers) * 100;
             return `
                 <div class="rifa-card">
-                    <img src="${rifa.image || 'https://via.placeholder.com/400x200'}" alt="${rifa.title}" class="rifa-image">
+                    <img src="${rifa.image || 'https://assets/logo-ub.png/400x200'}" alt="${rifa.title}" class="rifa-image">
                     <div class="rifa-content">
                         <h3 class="rifa-title">${rifa.title}</h3>
                         <p class="rifa-description">${rifa.description || ''}</p>
@@ -1698,7 +1698,7 @@ function loadComprasTable(compras) {
             <tr>
                 <td>
                     <div class="table-rifa-info">
-                        <img src="${rifa.image || 'https://via.placeholder.com/50'}" alt="${rifa.title}" onerror="this.src='https://via.placeholder.com/50'">
+                        <img src="${rifa.image || 'https://assets/logo-ub.png/50'}" alt="${rifa.title}" onerror="this.src='https://assets/logo-ub.png/50'">
                         <span>${rifa.title}</span>
                     </div>
                 </td>
