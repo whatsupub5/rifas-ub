@@ -129,6 +129,36 @@ La aplicación es completamente responsive y funciona en:
 - Verifica las rutas de los archivos CSS
 - Limpia la caché del navegador (Ctrl+Shift+R)
 
+## ✨ Funcionalidades Implementadas
+
+### 🎯 Compra Sin Registro
+- ✅ Cualquier persona puede comprar rifas sin necesidad de registrarse
+- ✅ Formulario de datos de contacto para usuarios no registrados
+- ✅ Guardado de compras de invitados
+
+### 🖼️ Galería de Imágenes
+- ✅ Soporte para múltiples imágenes por rifa
+- ✅ Lightbox para visualización ampliada
+- ✅ Navegación entre imágenes con thumbnails
+
+### ⭐ Sistema de Reseñas
+- ✅ Reseñas y calificaciones de organizadores
+- ✅ Visualización de reseñas en página de detalle
+- ✅ Sistema de confianza entre usuarios
+
+### 💬 Preguntas y Respuestas
+- ✅ Usuarios pueden hacer preguntas a organizadores
+- ✅ Respuestas públicas visibles
+- ✅ Disponible para usuarios registrados y no registrados
+
+### 📊 Últimos Compradores
+- ✅ Visualización de compradores recientes
+- ✅ Información de números comprados
+
+### 🔄 Estados de Carga
+- ✅ Indicadores de carga (loading states)
+- ✅ Skeleton screens para mejor UX
+
 ## 📝 TODO / Pendiente
 
 - [ ] Integración con backend real
